@@ -29,6 +29,7 @@ Progression is **world/run-based** (rogue-like per world, not per round). Enemy 
 - Classic **Good vs Evil** framing in a whimsical fantasy world.
 - Player represents the “good” faction defending a magical Castle.
 - Enemy threat is the spreading **Blight**, corrupting land and spawning **Outposts** and enemy units.
+- **World & story (developer, 2026-09-25):** a Shrek-style mash-up fairy-tale world where every story creature lives together — the good side (Santa, leprechauns, the Tooth Fairy…) and the evil side (witches, mummies, Dracula…). The **Blight is pure evil**, powering the evil creatures and trying to take over the good side's world. The leaders the player uses are the good side's champions. Upgrading the castle can change the world around it (see §11.3 deposit odds).
 - Worlds/leaders change “rules of nature” (terrain overrides, Blight distribution rules, special match rules).
 - Visuals: watercolor, hand-drawn, soft/pastel palette with paper textures; clarity > realism.
 
@@ -339,6 +340,19 @@ Replaces the "v1" description in §10.2. Established after the first real playte
 
 ---
 
+### 10.6 Gatherer haul loop & raider targeting — DECIDED 2026-09-25, NOT BUILT YET
+**Gatherer haul loop** (replaces today's "stand on a tile and collect 1/s forever"):
+- A gatherer walks to a tile, spends **~3s gathering** (tunable, reference game was 2–5s), carries **1 item** (capacity 1 to start; carry capacity is a future upgrade), walks back to the **castle**, drops it off **instantly**, and repeats.
+- Effect: income depends on the distance between resource tiles and the castle, so the map the player builds in the matching phase shapes the economy. Rough on-paper yield: ~5–6 items per gatherer per 30s battle (vs ~30 today).
+- **Gather spots:** a bare tile has about **4 gather spots** (gatherers spread out around it; a full tile sends the gatherer to the next-nearest tile). Buildings on a tile change the spot count (a Mine starts with fewer and upgrades up to more). Numbers are arbitrary starting points.
+- Later upgrade axes: carry capacity, gather time, move speed.
+
+**Raider behaviour** — vision, not omniscience. The castle is always the goal; raiders get *distracted* by what they can see (vision = aggro radius, ~2.3 tiles today; may need a smaller value for raiders).
+- **Walking rule** (what it moves toward): 1) the target it is already committed to, 2) otherwise the nearest **gatherer** it can see, 3) otherwise the castle. A raider already hitting the castle is committed to it and does not wander off after a gatherer that is merely nearby.
+- **Swinging rule** (what it hits when something is already within reach, no walking needed): **gatherer > fighter > structure**, chosen per swing. So a gatherer dropping off next to a castle-attacking raider takes hits, and a fighter that attacks it gets hit back — but fighters are not aggro magnets.
+- Gatherers running back to the castle naturally pull chasing raiders into the defenders.
+- Possible later: player fighters defending gatherers under attack.
+
 ## 11. Resources & Economy
 
 ### 11.1 Core Resources
@@ -370,6 +384,23 @@ Mid/late game:
 - Refined Magic is used for permanent unlocks outside runs
 
 ---
+
+### 11.3 Economy core decisions & metal/refinery vision — 2026-09-25
+**Decided, not built yet (economy core):**
+- **Match payout follows the reference game (Beetle Battle-style):** resources per matched group = its **match power** (3 tiles → 1 item, 4 → 2, 5 → 3, i.e. 1 + tiles beyond 3). Starting small makes each extra tile a bigger relative deal. Today the game pays 1 item per destroyed tile (3× more), which is why matching out-earns nothing and gatherers looked huge on paper.
+- **Dust stays generous:** 1 Dust per destroyed tile. Prices are *independent* of income — a unit may cost e.g. 1 water + 1 wood + ~10 dust; dust's value is set by prices, not 1:1 with items. Costs will be tuned from targets like "purchases per round", using measured income.
+- Reference-game fact check (developer replayed it): 3-match = 1 resource, 4-match = 2; gatherers walk to a tile, gather ~2–5s, carry it to the castle, instant drop-off, repeat; enemy units target gatherers before the castle; the reference had 5 tile types (so matches were rarer than our 4).
+- The haul loop and raider targeting: §10.6.
+
+**Vision (not committed):**
+- **Mine** — a passive producer that ticks **only its deposit's special resource** (e.g. iron ore; later gems), never basic stone, so it can't recreate a sit-and-tick economy. Tick is **chance-based** (e.g. ~1s tick at a low % chance) with **chance** and **amount** as upgrades (chance is capped at 100%, tick speed fixed to avoid three multiplying axes). Gatherers sent to it give an optional boost/extra output, not a requirement. **Mines do not persist between rounds.** Expected output = chance × amount ÷ seconds-per-tick; sample start ≈ 1 ore, 1s tick, 20% ≈ 0.2 ore/s (~4–6 per battle) for a high cost. Why build one: mined ore banks into the meta stash for future runs, and can be a tier you have not stockpiled.
+- **Castle Refinery** (a castle upgrade, always present — no build cost or time): refines a stockpiled ore into **bars** during every battle (e.g. 2 ore → 1 bar per 5s). Ore is carried into a run (carry-in cap, like Dust) and can come from the meta stash. Set to one recipe; **if it runs out it automatically advances to the next ore type the player owns (iron → silver → gold), and stops if none remain.** Throughput, not ore, is the limit: at the base rate ~6 bars per battle. Refinery upgrades (speed, efficiency, more ore types) are a castle upgrade path. Relates to the older "Castle Refinery: Dust → Refined Magic" (§11.2) — one refining mechanic family.
+- **Metals & tiers:** iron (T1), silver (T2), gold (T3), then stranger fantasy metals. Ores are stockpiled but cannot be spent; **bars buy permanent meta upgrades/unlocks** (e.g. "Knight damage level 2 = 5 iron bars"), possibly mixed across tiers so older metals keep a use. Start with **iron only** and prove the whole chain before adding tiers. Deposit definitions are data files, so new ores are mostly data.
+- **Bars are not a per-spawn cost.** Spawning stays on base resources + dust (so round 1 of an advanced run is never locked out). Possible later: elite units costing a bar or two, carried in under a cap.
+- **Castle deposit selector:** castle upgrades shift deposit *odds* (e.g. "silver deposits 2× likely"), never guarantees; deposits are made in the matching phase so this links the two phases. Higher progress should bring higher-tier ore sooner in a run.
+- **Castle auto-builder:** a very expensive castle upgrade that builds a Mine on a deposit at battle start (nothing is built if no deposit exists; maybe limited to one). It removes a decision, so keep it costly.
+- **UI:** the battle HUD shows only battle resources (base resources + dust). Ore/bars appear only in a **castle panel** (tap the castle; it **pauses the battle and the refinery clock**) showing recipe, rate and time-until-empty, plus a small glanceable badge on the castle. The recipe is chosen on the resolution screen or meta menu, changeable mid-battle.
+- Open: carry-out rules for bars on a lost run; whether the Refinery and the Dust refinery are one building; the Mine's real build time (not yet measured).
 
 ## 12. Progression & Meta Systems
 

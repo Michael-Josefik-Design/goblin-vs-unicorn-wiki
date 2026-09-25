@@ -1,8 +1,11 @@
 # Goblin vs Unicorn — game snapshot
 
-_Generated from the game files on **2026-09-25** (game repo revision `13b3fa1`). Numbers are exported straight from the game; rules text is hand-maintained. For design *intent* see `GameDesignDoc.md`; for status/plan see `ROADMAP.md`._
+_Generated from the game files on **2026-09-25** (game repo revision `212704c`). Numbers are exported straight from the game; rules text is hand-maintained. For design *intent* see `GameDesignDoc.md`; for status/plan see `ROADMAP.md`._
 
 Status tags used below: **built** (in the game and tested), **planned**, **idea** (not committed to), **cut**.
+
+## The story (developer's narrative)
+A Shrek-style mash-up fairy-tale world where every story creature lives together, good and evil. **Good side:** Santa, leprechauns, the Tooth Fairy… **Evil side:** witches, mummies, Dracula… The **Blight is pure evil**: it powers the evil creatures and is trying to take over the good side's world. The player leads one of the good side's champions (the leaders) and defends a magical castle. Upgrading the castle can change the world around it (e.g. which ores appear). Real name and full plot are not written yet.
 
 ## What the game is
 A round-based strategy game. A **Matching phase** (Puzzle & Dragons-style tile matching) earns resources and destroys *blight*; a 30-second **Battle phase** turns the same board into a battlefield where leftover blight becomes enemy outposts that spawn raiders and the player's units act autonomously (indirect control, no click-to-move); then a **Resolution** screen. Runs are several rounds; a Magic Dust stash persists between runs. Godot 4.5, GDScript, portrait mobile.
@@ -73,6 +76,20 @@ Income facts: 3 moves/round; matching pays 1 dust + 1 resource per destroyed til
 On paper a Farmer (2 items + 2 dust) can earn ~30 items per battle at 100% uptime while a full round of matching pays roughly 10 items, so gatherers may out-earn matching; a Mine (10 items) yields ~2 items/s once running. These are **unmeasured assumptions** (gatherer uptime, match groups per move, mine build time) and the main balance question.
 
 Run upgrades that exist: Sharpen Arrows (+1 damage for archers); Fast Gather (Gatherers are 10% faster); Sharpen Swords (+1 damage for knights); Terraformer (More moves when matching); Seething Evil (Increase the blight per round). None have a cost yet.
+
+## Decided but NOT built yet (economy core, decided 2026-09-25)
+Everything above describes TODAY's behavior. These three changes are decided and planned (`plans/04-economy-core.md`); the economy numbers above will change when they land.
+1. **Match payout = match power:** resources per matched group = 1 + tiles beyond 3 (3 tiles → 1 item, 4 → 2, 5 → 3), matching the reference game. Dust stays 1 per destroyed tile. (Today: 1 item per tile.)
+2. **Gatherer haul loop:** walk to a tile, gather ~3s, carry 1 item, return to the castle, instant drop-off, repeat; ~4 gather spots per bare tile. (Today: gatherers stand and collect 1/s.) On paper this cuts a gatherer's take from ~30 to ~5-6 items per battle.
+3. **Raider targeting:** walking rule = committed target, else nearest visible gatherer, else the castle (a raider already hitting the castle stays on it). Swinging rule (things already in reach) = gatherer > fighter > structure, chosen per swing. Vision = aggro radius.
+Prices will be set from targets like "purchases per round", using measured income, not from today's guesses.
+
+## Vision, not committed (see GameDesignDoc.md §11.3)
+- **Mine redesign:** passive producer of only its deposit's special resource (iron ore, later gems); chance-based tick with upgradable chance and amount; does not persist between rounds; ore banks into the meta stash.
+- **Castle Refinery:** a castle upgrade (no build cost) that refines stockpiled ore into bars during every battle (e.g. 2 ore -> 1 bar per 5s); one recipe at a time, **auto-advancing to the next owned ore type (iron -> silver -> gold) when one runs out, stopping if none remain**; throughput-limited (~6 bars per battle at base). Bars buy permanent meta upgrades and unlocks, never per-spawn costs.
+- **Metal tiers:** iron (T1), silver (T2), gold (T3), then fantasy metals; start iron-only.
+- **Castle deposit-odds selector** and a very costly **castle auto-builder** for Mines.
+- **UI rule:** ore and bars never appear on the battle HUD; they live in a castle panel (tap the castle; it pauses the battle).
 
 ## Ideas and open questions (not built)
 - **Castle in a match -> next-battle buff (idea):** castle joins a group without being destroyed; buff scales steeper-than-linear with group size, capped; buff type by castle biome (rock=defense/HP, forest=damage, field=gather speed/TBD).
