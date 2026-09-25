@@ -1,5 +1,7 @@
 # Goblin vs Unicorn — public dev wiki
 
+**Interactive wiki: https://michael-josefik-design.github.io/goblin-vs-unicorn-wiki/**
+
 Read-only reference for **Goblin vs Unicorn**, a Godot 4 mobile game blending Puzzle & Dragons-style tile matching with a short, autonomous RTS battle phase. These files are regenerated from the game and its docs, so they show **what the game does today, what it is meant to be, and what is being worked on**.
 
 ## Start here
