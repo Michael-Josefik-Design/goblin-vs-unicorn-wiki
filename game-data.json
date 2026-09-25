@@ -1,0 +1,252 @@
+{
+  "buildings": {
+    "Lumber Mill": {
+      "base_cost": {
+        "stone": 5,
+        "wood": 5
+      },
+      "cost_per_level": {
+        "stone": 1,
+        "wood": 1
+      },
+      "file": "LumberMillBuildDef.tres",
+      "id": "build_lumber_mill"
+    },
+    "Mine": {
+      "base_cost": {
+        "stone": 5,
+        "wood": 5
+      },
+      "cost_per_level": {
+        "stone": 1,
+        "wood": 1
+      },
+      "file": "MineBuildDef.tres",
+      "id": "build_mine"
+    }
+  },
+  "deposits": {
+    "IronDepositDef": {
+      "base_gather_yield_chance": 0.5,
+      "display_name": "Iron Deposit",
+      "id": "iron_deposit",
+      "tick_interval": 1.5,
+      "yield_id": "iron_ore",
+      "yield_per_gather": 1,
+      "yield_per_mine_tick": 2
+    }
+  },
+  "exported": "2026-09-25",
+  "game": {
+    "base_max_moves": 3,
+    "battle_duration_sec": 30.0,
+    "board_height": 7,
+    "board_width": 7,
+    "castle_hp": 20,
+    "chain_multiplier_applied": false,
+    "mine_spawn_chance_base": 0.2,
+    "mine_spawn_chance_per_round": 0.002,
+    "outpost_hp": 20,
+    "outpost_spawn_count": 1,
+    "outpost_spawn_interval": 2.0,
+    "pressure_step_per_round": 1,
+    "round_1_pressure": 5,
+    "starting_world_blight": 10,
+    "tile_size": 192
+  },
+  "run_upgrades": [
+    {
+      "amount": 1.0,
+      "desc": "+1 damage for archers",
+      "file": "ArcherBaseDmgDef.tres",
+      "rarity": 0,
+      "source": 0,
+      "stat": 0,
+      "target": 6,
+      "title": "Sharpen Arrows"
+    },
+    {
+      "amount": 1.0,
+      "desc": "Gatherers are 10% faster",
+      "file": "GatherMoveSpeedDef.tres",
+      "rarity": 0,
+      "source": 0,
+      "stat": 0,
+      "target": 6,
+      "title": "Fast Gather"
+    },
+    {
+      "amount": 1.0,
+      "desc": "+1 damage for knights",
+      "file": "KnightBaseDmgDef.tres",
+      "rarity": 0,
+      "source": 0,
+      "stat": 0,
+      "target": 5,
+      "title": "Sharpen Swords"
+    },
+    {
+      "amount": 1.0,
+      "desc": "More moves when matching",
+      "file": "PlayerMovesBonusDef.tres",
+      "rarity": 0,
+      "source": 0,
+      "stat": 4,
+      "target": 1,
+      "title": "Terraformer"
+    },
+    {
+      "amount": 1.0,
+      "desc": "Increase the blight per round",
+      "file": "SeethingEvilDef.tres",
+      "rarity": 0,
+      "source": 0,
+      "stat": 5,
+      "target": 1,
+      "title": "Seething Evil"
+    }
+  ],
+  "terrain_speed": {
+    "FIELD": 1.0,
+    "FOREST": 0.75,
+    "MOUNTAIN": 0.5,
+    "WATER": 0.0
+  },
+  "unit_defaults": {
+    "aggro_radius": 450.0,
+    "attack_cooldown": 0.6,
+    "attack_damage": 2,
+    "attack_range": 4.0,
+    "move_speed": 500.0,
+    "radius_px": 18.0,
+    "role": 0,
+    "separation_radius": 17.0,
+    "separation_strength": 120.0,
+    "stop_distance": 10.0,
+    "team": 0,
+    "upgrade_target": 0
+  },
+  "units": {
+    "Archer": {
+      "attack_damage": 4,
+      "caps": 5,
+      "cost": {
+        "food": 1,
+        "stone": 1,
+        "wood": 1
+      },
+      "display_name": "Archer",
+      "dust_cost": 4,
+      "file": "ArcherDef.tres",
+      "gather_amount": 1,
+      "gather_interval": 1.0,
+      "gather_range": 24.0,
+      "gather_terrain_type": 0,
+      "max_hp": 20,
+      "melee_damage_mult": 1.0,
+      "melee_range": 4.0,
+      "move_speed": 500.0,
+      "projectile_speed": 1800.0,
+      "ranged_chance": 1.0,
+      "ranged_damage_mult": 1.0,
+      "ranged_range": 450.0,
+      "upgrade_target": 6
+    },
+    "Farmer": {
+      "attack_damage": 1,
+      "caps": 2,
+      "cost": {
+        "food": 1,
+        "water": 1
+      },
+      "display_name": "Farmer",
+      "dust_cost": 2,
+      "file": "FarmerDef.tres",
+      "gather_amount": 1,
+      "gather_interval": 1.0,
+      "gather_range": 24.0,
+      "gather_terrain_type": 0,
+      "max_hp": 10,
+      "melee_damage_mult": 1.0,
+      "melee_range": 4.0,
+      "move_speed": 420.0,
+      "projectile_speed": 1800.0,
+      "ranged_chance": 1.0,
+      "ranged_damage_mult": 1.0,
+      "ranged_range": 450.0,
+      "upgrade_target": 8
+    },
+    "Knight": {
+      "attack_damage": 4,
+      "caps": 9,
+      "cost": {
+        "food": 1,
+        "water": 1,
+        "wood": 1
+      },
+      "display_name": "Knight",
+      "dust_cost": 4,
+      "file": "KnightDef.tres",
+      "gather_amount": 1,
+      "gather_interval": 1.0,
+      "gather_range": 24.0,
+      "gather_terrain_type": 0,
+      "max_hp": 20,
+      "melee_damage_mult": 1.0,
+      "melee_range": 4.0,
+      "move_speed": 500.0,
+      "projectile_speed": 1800.0,
+      "ranged_chance": 1.0,
+      "ranged_damage_mult": 1.0,
+      "ranged_range": 450.0,
+      "upgrade_target": 5
+    },
+    "Miner": {
+      "attack_damage": 1,
+      "caps": 2,
+      "cost": {
+        "food": 1,
+        "water": 1
+      },
+      "display_name": "Miner",
+      "dust_cost": 2,
+      "file": "MinerDef.tres",
+      "gather_amount": 1,
+      "gather_interval": 1.0,
+      "gather_range": 24.0,
+      "gather_terrain_type": 2,
+      "max_hp": 10,
+      "melee_damage_mult": 1.0,
+      "melee_range": 4.0,
+      "move_speed": 420.0,
+      "projectile_speed": 1800.0,
+      "ranged_chance": 1.0,
+      "ranged_damage_mult": 1.0,
+      "ranged_range": 450.0,
+      "upgrade_target": 7
+    },
+    "Raider": {
+      "attack_damage": 3,
+      "caps": 1,
+      "cost": {
+
+      },
+      "display_name": "Raider",
+      "dust_cost": 4,
+      "file": "RaiderDef.tres",
+      "gather_amount": 1,
+      "gather_interval": 1.0,
+      "gather_range": 24.0,
+      "gather_terrain_type": 0,
+      "max_hp": 20,
+      "melee_damage_mult": 1.0,
+      "melee_range": 4.0,
+      "move_speed": 500.0,
+      "projectile_speed": 1800.0,
+      "ranged_chance": 1.0,
+      "ranged_damage_mult": 1.0,
+      "ranged_range": 450.0,
+      "upgrade_target": 0
+    }
+  }
+}

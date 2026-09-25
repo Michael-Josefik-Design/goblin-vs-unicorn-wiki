@@ -1,0 +1,83 @@
+# Goblin vs Unicorn — game snapshot
+
+_Generated from the game files on **2026-09-25** (game repo revision `08ba4d1`). Numbers are exported straight from the game; rules text is hand-maintained. For design *intent* see `GameDesignDoc.md`; for status/plan see `ROADMAP.md`._
+
+Status tags used below: **built** (in the game and tested), **planned**, **idea** (not committed to), **cut**.
+
+## What the game is
+A round-based strategy game. A **Matching phase** (Puzzle & Dragons-style tile matching) earns resources and destroys *blight*; a 30-second **Battle phase** turns the same board into a battlefield where leftover blight becomes enemy outposts that spawn raiders and the player's units act autonomously (indirect control, no click-to-move); then a **Resolution** screen. Runs are several rounds; a Magic Dust stash persists between runs. Godot 4.5, GDScript, portrait mobile.
+
+## Round flow (built)
+1. **Matching:** 3 moves. Swap two adjacent tiles; every swap is legal whether or not it matches. Ends when moves run out or the player ends it early (confirm dialog).
+2. **Battle:** 30 seconds. Board becomes terrain; blight left over becomes outposts; units fight and gather on their own.
+3. **Resolution:** report + pick one run upgrade; next round has more blight.
+
+Board 7x7, 192px tiles, castle in the center. Blight pressure starts at 5 and grows by 1 per round; the world starts with 10 blight.
+
+## Matching rules (built, pinned by MatchingRulesTest)
+- A tile counts only if it is in a straight horizontal or vertical line of **3 or more** of one biome. There is **no upper cap** on line length.
+- Counted tiles of the same biome that touch **orthogonally** (up/down/left/right) merge into **one group**: plus, L, T, stacked and offset-by-one lines all merge.
+- A lone tile touching a line but not in its own line of 3+ does **not** join.
+- **No diagonal** adjacency, ever. Lines touching only at a corner stay separate groups (both still clear).
+- The castle never matches; it breaks any line it sits in.
+- **Match power** = 1 + (tiles beyond 3). It is a budget that permanently kills blight (1 per point) on tiles in the group. Blight left on destroyed tiles goes to a pending pool and reappears on new tiles that round.
+- Each destroyed tile pays 1 Magic Dust + 1 of its biome's resource (Field=food, Forest=wood, Mountain=stone, Water=water); modifiers may add bonus yield.
+- **Kept tiles:** the longest straight run in a group decides. A run of 4+ keeps one tile (may receive a modifier); a run of 5+ keeps a chest. The kept tile is `run[len/2]`, so in even-length runs it is the tile just past center (right/bottom). _Open design question: whether the kept tile should instead be the one the player moved._ Longer runs (6, 7) give no bigger reward than 5.
+- **Cascades:** after clearing, tiles fall and refill; new matches resolve as another wave, repeating until stable. Each wave shows "Chain xN". Chain count gives **no** reward multiplier yet (planned).
+
+## Terrain (built; speeds from code)
+| Terrain | Resource | Ground speed | Ground units |
+|---|---|---|---|
+| Field | food | x1.0 | full speed |
+| Forest | wood | x0.75 | slowed |
+| Mountain | stone | x0.5 | slowed |
+| Water | water | — | blocked (solid wall; units path around) |
+
+The tile decides speed/blocking, never decorations. Flying units (planned) ignore terrain speed and water/mountain blocking. Movement uses A* on the tile grid with water as solid cells.
+
+## Units (built; numbers from the unit definition files)
+| Unit | HP | Damage | DPS | Speed (tiles/s) | Range | Cost |
+|---|---|---|---|---|---|---|
+| Archer | 20 | 4 | 6.7 | 2.60 | 2.34 tiles | 1 food, 1 stone, 1 wood, 4 dust |
+| Farmer | 10 | 1 | 1.7 | 2.19 | melee | 1 food, 1 water, 2 dust |
+| Knight | 20 | 4 | 6.7 | 2.60 | melee | 1 food, 1 water, 1 wood, 4 dust |
+| Miner | 10 | 1 | 1.7 | 2.19 | melee | 1 food, 1 water, 2 dust |
+| Raider | 20 | 3 | 5.0 | 2.60 | melee | enemy unit |
+
+Attack cooldown 0.6s for all units. Aggro radius 450px (2.34 tiles). **Reach** (one shared rule for movement and combat) = attack range + own radius + target radius, centre to centre. Combat numbers are **placeholder** and unbalanced.
+
+**Brains** (re-think ~2.5x/second and commit to a choice):
+- Player fighters: 1) keep fighting the current enemy unit (unless it runs beyond 1.5x aggro), 2) nearest enemy unit in aggro, 3) keep hitting the current outpost, 4) go to the outpost closest to the castle, 5) hold.
+- Enemy raiders: 1) finish current fight, 2) nearest player unit in aggro, 3) march on the castle.
+- Gatherers: find the nearest tile of their terrain (Farmer: Field, Miner: Mountain), walk there, collect 1 per 1.0s.
+
+## Structures
+- **Castle** (built): 20 HP; losing it loses the run; never matches. Blight on the castle tile causes battle penalties (rules TBD).
+- **Enemy outposts** (built): made from leftover blight; 20 HP; spawn 1 raider every 2.0s while alive.
+- **Lumber Mill** (built): base cost 5 stone, 5 wood; +1 stone, 1 wood per extra level (assumed linear).
+- **Mine** (built): base cost 5 stone, 5 wood; +1 stone, 1 wood per extra level (assumed linear).
+- **Iron deposit / mine yield:** 2 iron ore + 1 stone every 1.5s once a mine is running; gather chance 50% (+1%/level).
+- **Chest** (partly built): a straight 5+ match leaves one; can't be matched; battle behavior/loot unsettled.
+
+## Economy (numbers from code; income figures are on-paper, not measured in play)
+Costs:
+
+| Item | Cost |
+|---|---|
+| Farmer | 1 food, 1 water, 2 dust |
+| Miner | 1 food, 1 water, 2 dust |
+| Knight | 1 food, 1 water, 1 wood, 4 dust |
+| Archer | 1 food, 1 stone, 1 wood, 4 dust |
+
+Income facts: 3 moves/round; matching pays 1 dust + 1 resource per destroyed tile; a gatherer collects 1 per 1.0s during a 30s battle. Dust has **no battle income in code** (design doc says gathering should give some).
+On paper a Farmer (2 items + 2 dust) can earn ~30 items per battle at 100% uptime while a full round of matching pays roughly 10 items, so gatherers may out-earn matching; a Mine (10 items) yields ~2 items/s once running. These are **unmeasured assumptions** (gatherer uptime, match groups per move, mine build time) and the main balance question.
+
+Run upgrades that exist: Sharpen Arrows (+1 damage for archers); Fast Gather (Gatherers are 10% faster); Sharpen Swords (+1 damage for knights); Terraformer (More moves when matching); Seething Evil (Increase the blight per round). None have a cost yet.
+
+## Ideas and open questions (not built)
+- **Castle in a match -> next-battle buff (idea):** castle joins a group without being destroyed; buff scales steeper-than-linear with group size, capped; buff type by castle biome (rock=defense/HP, forest=damage, field=gather speed/TBD).
+- **Terrain decorations (planned):** cosmetic, seeded per tile, battle view only, neighbor-aware edges; gems keep a consistent look, may gain state overlays (blight veins).
+- **Ridges between adjacent mountains (explore later):** visual ridge; possible passage-blocking is a gameplay change needing edge-level pathfinding.
+- **Flying units, merchant Trade/Shop, meta upgrade tree, chain-count rewards (planned).**
+- **Cut:** mulligan; deadlock detection (every adjacent swap is legal, so no stuck state exists).
+- **Open:** kept-tile choice in even-length runs; what limits gatherers; combat model (armor, damage types); castle-tile blight penalty.
