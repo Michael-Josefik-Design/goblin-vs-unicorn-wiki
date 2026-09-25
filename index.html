@@ -1,0 +1,372 @@
+<title>Goblin vs Unicorn Wiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F2F4F7; --surface:#FFFFFF; --ink:#16202E; --muted:#5B6778; --line:#D9DEE6; --accent:#5B3FD9; --soft:#EAEDF3;
+  --food:#D9A21B; --wood:#3F8F4E; --stone:#7C8794; --water:#2E86D6; --dust:#8A5BE0; --iron:#C4562B;
+  --good:#1E8A55; --warn:#B7791F; --bad:#C0392B;
+  --display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif; --body:'IBM Plex Sans','Segoe UI',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#10151D; --surface:#182029; --ink:#E8EDF4; --muted:#9AA6B6; --line:#2A3441; --accent:#9B85FF; --soft:#202A36;
+  --food:#EDB93A; --wood:#5DB56D; --stone:#9AA6B3; --water:#4FA3EE; --dust:#A985F0; --iron:#E0724A;
+  --good:#45C084; --warn:#E0A94A; --bad:#EE6B5C; } }
+:root[data-theme="dark"]{
+  --bg:#10151D; --surface:#182029; --ink:#E8EDF4; --muted:#9AA6B6; --line:#2A3441; --accent:#9B85FF; --soft:#202A36;
+  --food:#EDB93A; --wood:#5DB56D; --stone:#9AA6B3; --water:#4FA3EE; --dust:#A985F0; --iron:#E0724A;
+  --good:#45C084; --warn:#E0A94A; --bad:#EE6B5C; }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;padding-inline:16px;padding-block:0;margin:0}
+.wrap{max-width:1060px;margin:0 auto}
+header.top{padding-block:18px 10px;border-bottom:1px solid var(--line)}
+.brand h1{font-family:var(--display);font-size:1.6rem;margin:0;letter-spacing:-.01em}
+.brand span{color:var(--muted);font-size:.85rem}
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;padding-block:18px 60px}
+@media(min-width:860px){.layout{grid-template-columns:200px minmax(0,1fr)}}
+nav.side{font-size:.9rem}
+nav.side .grp{font:500 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 5px}
+nav.side .grp:first-child{margin-top:0}
+nav.side button{display:block;width:100%;text-align:left;font:500 .9rem var(--body);color:var(--muted);background:none;border:0;border-left:3px solid var(--line);padding:6px 10px;cursor:pointer}
+nav.side button:hover{color:var(--ink)}
+nav.side button[aria-current="page"]{color:var(--ink);border-left-color:var(--accent);background:var(--soft)}
+@media(min-width:860px){nav.side{position:sticky;top:14px;align-self:start}}
+@media(max-width:859px){nav.side{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px}nav.side .grp{display:none}nav.side button{width:auto;white-space:nowrap;border:0;border-bottom:3px solid var(--line)}nav.side button[aria-current="page"]{border-bottom-color:var(--accent)}}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pagehead{margin-bottom:6px}
+.pagehead h2{font-family:var(--display);font-size:1.9rem;margin:0 0 4px;letter-spacing:-.015em;text-wrap:balance}
+.chiprow{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 22px;font-size:.85rem}
+.chiprow a{color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted)}
+.chiprow a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+section.blk{margin-bottom:34px;scroll-margin-top:16px}
+h3{font-family:var(--display);font-size:1.3rem;margin:0 0 6px;letter-spacing:-.01em;text-wrap:balance}
+h4{font-family:var(--display);font-size:1rem;margin:16px 0 4px}
+p{margin:0 0 10px;max-width:68ch}
+.lede{color:var(--muted);font-size:1.03rem}
+.note{background:var(--soft);border-radius:8px;padding:10px 14px;margin:12px 0;max-width:72ch;font-size:.92rem}
+.tag{font:500 .72rem var(--mono);padding:2px 8px;border-radius:99px;background:var(--soft);color:var(--muted);white-space:nowrap}
+.tag.code,.tag.built{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.tag.guess,.tag.plan{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}
+.tag.idea{background:color-mix(in srgb,var(--dust) 20%,transparent);color:var(--dust)}
+.tag.cut{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px 22px}
+.ctl label{display:flex;justify-content:space-between;font-size:.85rem;gap:8px}
+.ctl label output{font-family:var(--mono);color:var(--accent);font-weight:500}
+.ctl small{display:block;color:var(--muted);font-size:.75rem;line-height:1.35;margin-top:2px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.tblwrap{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top}
+td.wrap,th.wrap{white-space:normal;min-width:220px}
+th{font:500 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.chip{display:inline-flex;align-items:center;gap:5px;font:500 .78rem var(--mono);margin-right:10px}
+.chip i{width:10px;height:10px;border-radius:3px;display:inline-block}
+svg text{fill:var(--muted);font-family:var(--mono);font-size:11px}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .axis{stroke:var(--muted);stroke-width:1}
+.chartbox{overflow-x:auto}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.kpi b{display:block;font:500 1.35rem var(--display);font-variant-numeric:tabular-nums}
+.kpi span{font-size:.78rem;color:var(--muted)}
+.verdict{border-left:4px solid var(--warn);padding:8px 14px;background:var(--surface);border-radius:0 8px 8px 0;margin:12px 0;max-width:72ch}
+.verdict.good{border-left-color:var(--good)} .verdict.bad{border-left-color:var(--bad)}
+.verdict b{font-family:var(--display)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:12px 0}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.9rem}
+.cards b{font-family:var(--display);display:block;margin-bottom:3px}
+ol.steps{padding-left:22px;margin:6px 0 10px} ol.steps li{margin-bottom:6px;max-width:70ch}
+ul{padding-left:20px;margin:6px 0 10px} li{margin-bottom:4px;max-width:70ch}
+code{font-family:var(--mono);font-size:.85em;background:var(--soft);padding:1px 5px;border-radius:4px}
+/* match diagrams */
+.diagrams{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:12px 0}
+.dg{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px}
+.dg h5{font:600 .85rem var(--display);margin:0 0 8px}
+.dg p{font-size:.8rem;color:var(--muted);margin:8px 0 0}
+.grid{display:inline-grid;gap:3px}
+.cell{width:30px;height:30px;border-radius:5px;display:flex;align-items:center;justify-content:center;font:600 .68rem var(--mono);color:rgba(0,0,0,.55);border:2px solid transparent;user-select:none}
+.cell.F{background:var(--food)} .cell.W{background:var(--wood)} .cell.M{background:var(--stone)} .cell.A{background:var(--water)}
+.cell.C{background:repeating-linear-gradient(45deg,var(--dust),var(--dust) 4px,color-mix(in srgb,var(--dust) 60%,transparent) 4px,color-mix(in srgb,var(--dust) 60%,transparent) 8px)}
+.cell.x{background:var(--soft);color:var(--muted)}
+.cell.hit{border-color:var(--ink);box-shadow:0 0 0 2px var(--surface) inset}
+.cell.g0{outline:3px solid var(--iron);outline-offset:-3px}
+.cell.g1{outline:3px solid var(--accent);outline-offset:-3px}
+.cell.g2{outline:3px solid var(--good);outline-offset:-3px}
+.cell.g3{outline:3px solid var(--warn);outline-offset:-3px}
+.cell.keep::after{content:"★";font-size:.8rem}
+.play .cell{cursor:pointer;width:38px;height:38px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--muted);margin:6px 0}
+.legend .cell{width:16px;height:16px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:4px}
+/* flow */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;margin:14px 0}
+.flow>div{background:var(--surface);border:1px solid var(--line);padding:14px;position:relative}
+.flow>div:not(:last-child)::after{content:"→";position:absolute;right:-9px;top:14px;background:var(--bg);color:var(--accent);font-weight:700;z-index:2;line-height:1;padding:2px 0}
+.flow b{font-family:var(--display);display:block;font-size:1.05rem;margin-bottom:4px}
+.flow small{color:var(--muted);display:block;margin-top:6px}
+</style>
+
+<div class="wrap">
+<header class="top"><div class="brand"><h1>Goblin vs Unicorn Wiki</h1><span>How the game works, as built. Tags: <span class="tag built">built</span> <span class="tag plan">planned</span> <span class="tag idea">idea</span> <span class="tag cut">cut</span> · numbers marked <span class="tag code">from code</span> are exported from the game files (<span id="exp"></span>).</span></div></header>
+<div class="layout"><nav class="side" id="side" aria-label="Wiki pages"></nav><div id="page"></div></div>
+</div>
+
+<script>
+/* ============ GAME DATA — exported from the game's files by _Debug/ExportWikiData.gd ============ */
+const GAME = {"buildings": {"Lumber Mill": {"base_cost": {"stone": 5, "wood": 5}, "cost_per_level": {"stone": 1, "wood": 1}, "file": "LumberMillBuildDef.tres", "id": "build_lumber_mill"}, "Mine": {"base_cost": {"stone": 5, "wood": 5}, "cost_per_level": {"stone": 1, "wood": 1}, "file": "MineBuildDef.tres", "id": "build_mine"}}, "deposits": {"IronDepositDef": {"base_gather_yield_chance": 0.5, "display_name": "Iron Deposit", "id": "iron_deposit", "tick_interval": 1.5, "yield_id": "iron_ore", "yield_per_gather": 1, "yield_per_mine_tick": 2}}, "exported": "2026-09-25", "game": {"base_max_moves": 3, "battle_duration_sec": 30.0, "board_height": 7, "board_width": 7, "castle_hp": 20, "chain_multiplier_applied": false, "mine_spawn_chance_base": 0.2, "mine_spawn_chance_per_round": 0.002, "outpost_hp": 20, "outpost_spawn_count": 1, "outpost_spawn_interval": 2.0, "pressure_step_per_round": 1, "round_1_pressure": 5, "starting_world_blight": 10, "tile_size": 192}, "run_upgrades": [{"amount": 1.0, "desc": "+1 damage for archers", "file": "ArcherBaseDmgDef.tres", "rarity": 0, "source": 0, "stat": 0, "target": 6, "title": "Sharpen Arrows"}, {"amount": 1.0, "desc": "Gatherers are 10% faster", "file": "GatherMoveSpeedDef.tres", "rarity": 0, "source": 0, "stat": 0, "target": 6, "title": "Fast Gather"}, {"amount": 1.0, "desc": "+1 damage for knights", "file": "KnightBaseDmgDef.tres", "rarity": 0, "source": 0, "stat": 0, "target": 5, "title": "Sharpen Swords"}, {"amount": 1.0, "desc": "More moves when matching", "file": "PlayerMovesBonusDef.tres", "rarity": 0, "source": 0, "stat": 4, "target": 1, "title": "Terraformer"}, {"amount": 1.0, "desc": "Increase the blight per round", "file": "SeethingEvilDef.tres", "rarity": 0, "source": 0, "stat": 5, "target": 1, "title": "Seething Evil"}], "terrain_speed": {"FIELD": 1.0, "FOREST": 0.75, "MOUNTAIN": 0.5, "WATER": 0.0}, "unit_defaults": {"aggro_radius": 450.0, "attack_cooldown": 0.6, "attack_damage": 2, "attack_range": 4.0, "move_speed": 500.0, "radius_px": 18.0, "role": 0, "separation_radius": 17.0, "separation_strength": 120.0, "stop_distance": 10.0, "team": 0, "upgrade_target": 0}, "units": {"Archer": {"attack_damage": 4, "caps": 5, "cost": {"food": 1, "stone": 1, "wood": 1}, "display_name": "Archer", "dust_cost": 4, "file": "ArcherDef.tres", "gather_amount": 1, "gather_interval": 1.0, "gather_range": 24.0, "gather_terrain_type": 0, "max_hp": 20, "melee_damage_mult": 1.0, "melee_range": 4.0, "move_speed": 500.0, "projectile_speed": 1800.0, "ranged_chance": 1.0, "ranged_damage_mult": 1.0, "ranged_range": 450.0, "upgrade_target": 6}, "Farmer": {"attack_damage": 1, "caps": 2, "cost": {"food": 1, "water": 1}, "display_name": "Farmer", "dust_cost": 2, "file": "FarmerDef.tres", "gather_amount": 1, "gather_interval": 1.0, "gather_range": 24.0, "gather_terrain_type": 0, "max_hp": 10, "melee_damage_mult": 1.0, "melee_range": 4.0, "move_speed": 420.0, "projectile_speed": 1800.0, "ranged_chance": 1.0, "ranged_damage_mult": 1.0, "ranged_range": 450.0, "upgrade_target": 8}, "Knight": {"attack_damage": 4, "caps": 9, "cost": {"food": 1, "water": 1, "wood": 1}, "display_name": "Knight", "dust_cost": 4, "file": "KnightDef.tres", "gather_amount": 1, "gather_interval": 1.0, "gather_range": 24.0, "gather_terrain_type": 0, "max_hp": 20, "melee_damage_mult": 1.0, "melee_range": 4.0, "move_speed": 500.0, "projectile_speed": 1800.0, "ranged_chance": 1.0, "ranged_damage_mult": 1.0, "ranged_range": 450.0, "upgrade_target": 5}, "Miner": {"attack_damage": 1, "caps": 2, "cost": {"food": 1, "water": 1}, "display_name": "Miner", "dust_cost": 2, "file": "MinerDef.tres", "gather_amount": 1, "gather_interval": 1.0, "gather_range": 24.0, "gather_terrain_type": 2, "max_hp": 10, "melee_damage_mult": 1.0, "melee_range": 4.0, "move_speed": 420.0, "projectile_speed": 1800.0, "ranged_chance": 1.0, "ranged_damage_mult": 1.0, "ranged_range": 450.0, "upgrade_target": 7}, "Raider": {"attack_damage": 3, "caps": 1, "cost": {}, "display_name": "Raider", "dust_cost": 4, "file": "RaiderDef.tres", "gather_amount": 1, "gather_interval": 1.0, "gather_range": 24.0, "gather_terrain_type": 0, "max_hp": 20, "melee_damage_mult": 1.0, "melee_range": 4.0, "move_speed": 500.0, "projectile_speed": 1800.0, "ranged_chance": 1.0, "ranged_damage_mult": 1.0, "ranged_range": 450.0, "upgrade_target": 0}}};
+/* ============ constants ============ */
+const RES = { food:{name:'Food',c:'var(--food)'}, wood:{name:'Wood',c:'var(--wood)'}, stone:{name:'Stone',c:'var(--stone)'}, water:{name:'Water',c:'var(--water)'}, dust:{name:'Magic Dust',c:'var(--dust)'}, iron_ore:{name:'Iron ore',c:'var(--iron)'} };
+const TERRAIN_TYPES=['FIELD','FOREST','MOUNTAIN','WATER'];
+const TERRAIN = {FIELD:{name:'Field',res:'food',cls:'F'},FOREST:{name:'Forest',res:'wood',cls:'W'},MOUNTAIN:{name:'Mountain',res:'stone',cls:'M'},WATER:{name:'Water',res:'water',cls:'A'}};
+const G=GAME.game, U=GAME.units, UD=GAME.unit_defaults, TILE=G.tile_size;
+const PLAYER_UNITS=['Farmer','Miner','Knight','Archer'];
+const $ = s => document.querySelector(s);
+const fmt=(n,d=1)=>(Math.round(n*10**d)/10**d).toString();
+const sum=o=>Object.values(o).reduce((a,b)=>a+b,0);
+const S={groupsPerMove:1.0,groupSize:3.5,farmers:2,miners:1,uptime:60,mines:0,mineSeconds:20,growthBase:10,growthRate:15,linStep:5,logScale:12,castleBase:2,castleExp:2.1};
+const dep=GAME.deposits.IronDepositDef;
+function slider(id,label,min,max,step,hint,unit=''){return `<div class="ctl"><label for="${id}">${label}<output id="${id}-o">${S[id]}${unit}</output></label><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${S[id]}" data-unit="${unit}"><small>${hint}</small></div>`;}
+function bindSliders(rerender){document.querySelectorAll('input[type=range]').forEach(el=>el.addEventListener('input',()=>{S[el.id]=parseFloat(el.value);$('#'+el.id+'-o').textContent=el.value+(el.dataset.unit||'');rerender();}));}
+function chips(keys){return keys.map(k=>`<span class="chip"><i style="background:${RES[k].c}"></i>${RES[k].name}</span>`).join('');}
+function costCell(c,dust){let o=[];for(const k in c)o.push(`<span class="chip"><i style="background:${RES[k].c}"></i>${c[k]}</span>`);if(dust)o.push(`<span class="chip"><i style="background:${RES.dust.c}"></i>${dust}</span>`);return o.join('')||'—';}
+const src=f=>`<span class="tag code">${f}</span>`;
+
+/* ---------- charts ---------- */
+function lineChart({series,w=640,h=300,xl='',yl='',yfmt=v=>fmt(v,0),xTicks=6,yTicks=5,marks=[]}){
+  const m={l:52,r:16,t:14,b:38},iw=w-m.l-m.r,ih=h-m.t-m.b;
+  const xs=series.flatMap(s=>s.pts.map(p=>p[0])),ys=series.flatMap(s=>s.pts.map(p=>p[1]));
+  const x0=Math.min(...xs),x1=Math.max(...xs),y1=Math.max(...ys)*1.08,y0=0;
+  const X=v=>m.l+(v-x0)/(x1-x0)*iw,Y=v=>m.t+ih-(v-y0)/(y1-y0)*ih;let g='';
+  for(let i=0;i<=yTicks;i++){const v=y0+(y1-y0)*i/yTicks;g+=`<line class="grid" x1="${m.l}" x2="${w-m.r}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${m.l-8}" y="${Y(v)+4}" text-anchor="end">${yfmt(v)}</text>`;}
+  for(let i=0;i<=xTicks;i++){const v=x0+(x1-x0)*i/xTicks;g+=`<text x="${X(v)}" y="${h-m.b+16}" text-anchor="middle">${fmt(v,0)}</text>`;}
+  g+=`<line class="axis" x1="${m.l}" x2="${w-m.r}" y1="${Y(0)}" y2="${Y(0)}"/><line class="axis" x1="${m.l}" x2="${m.l}" y1="${m.t}" y2="${Y(0)}"/>`;
+  g+=`<text x="${m.l+iw/2}" y="${h-4}" text-anchor="middle">${xl}</text><text x="12" y="${m.t+ih/2}" transform="rotate(-90 12 ${m.t+ih/2})" text-anchor="middle">${yl}</text>`;
+  for(const s of series){const d=s.pts.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join(' ');
+    g+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.5" ${s.dash?'stroke-dasharray="6 5"':''} stroke-linejoin="round"/>`;const l=s.pts[s.pts.length-1];g+=`<circle cx="${X(l[0])}" cy="${Y(l[1])}" r="4" fill="${s.color}"/>`;}
+  for(const mk of marks)g+=`<line x1="${X(mk.x)}" x2="${X(mk.x)}" y1="${m.t}" y2="${Y(0)}" stroke="${mk.color||'var(--muted)'}" stroke-dasharray="3 4"/><text x="${X(mk.x)+4}" y="${m.t+10}">${mk.label}</text>`;
+  return `<div class="chartbox"><svg viewBox="0 0 ${w} ${h}" width="100%" style="min-width:420px;max-width:${w}px" role="img" aria-label="${yl} versus ${xl}">${g}</svg></div><div>${series.map(s=>`<span class="chip"><i style="background:${s.color}"></i>${s.name}</span>`).join('')}</div>`;}
+function stackedBars({rows,w=640,unit=''}){
+  const m={l:96,r:60,t:6,b:24},rh=30,h=m.t+m.b+rows.length*rh,iw=w-m.l-m.r;const tot=r=>r.parts.reduce((a,p)=>a+p.v,0);const mx=Math.max(...rows.map(tot))*1.08||1;let g='';
+  for(let i=0;i<=4;i++){const v=mx*i/4,x=m.l+iw*i/4;g+=`<line class="grid" x1="${x}" x2="${x}" y1="${m.t}" y2="${h-m.b}"/><text x="${x}" y="${h-8}" text-anchor="middle">${fmt(v,0)}</text>`;}
+  rows.forEach((r,i)=>{const y=m.t+i*rh;let x=m.l;g+=`<text x="${m.l-8}" y="${y+rh/2+2}" text-anchor="end">${r.label}</text>`;r.parts.forEach(p=>{const ww=p.v/mx*iw;if(ww>0){g+=`<rect x="${x}" y="${y+5}" width="${ww}" height="${rh-10}" fill="${RES[p.k].c}" rx="2"/>`;x+=ww;}});g+=`<text x="${x+6}" y="${y+rh/2+2}">${fmt(tot(r),1)}${unit}</text>`;});
+  return `<div class="chartbox"><svg viewBox="0 0 ${w} ${h}" width="100%" style="min-width:420px;max-width:${w}px" role="img" aria-label="stacked bars">${g}</svg></div>`;}
+
+/* ---------- the game's real match rule, mirrored in JS (see Board/MatchingSystem.gd + MatchingRulesTest) ---------- */
+function analyze(grid){ // grid: array of strings; chars F W M A (matchable), C castle, x/other (not matchable)
+  const h=grid.length,w=grid[0].length,ok=c=>'FWMA'.includes(c);const raw=new Set();const key=(x,y)=>x+','+y;
+  const line=(cells)=>{let run=[cells[0]];const flush=()=>{if(run.length>=3&&ok(run[0].c))run.forEach(p=>raw.add(key(p.x,p.y)));};for(let i=1;i<cells.length;i++){if(cells[i].c===run[0].c&&ok(cells[i].c))run.push(cells[i]);else{flush();run=[cells[i]];}}flush();};
+  for(let y=0;y<h;y++)line([...grid[y]].map((c,x)=>({x,y,c})));
+  for(let x=0;x<w;x++)line(grid.map((r,y)=>({x,y,c:r[x]})));
+  const seen=new Set(),groups=[];
+  raw.forEach(k=>{if(seen.has(k))return;const [sx,sy]=k.split(',').map(Number),c=grid[sy][sx],st=[[sx,sy]],cells=[];while(st.length){const [x,y]=st.pop(),kk=key(x,y);if(seen.has(kk))continue;seen.add(kk);cells.push([x,y]);[[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=w||ny>=h)return;if(raw.has(key(nx,ny))&&!seen.has(key(nx,ny))&&grid[ny][nx]===c)st.push([nx,ny]);});}groups.push(cells);});
+  groups.forEach(cells=>{const set=new Set(cells.map(p=>key(...p)));let best=0,bestRun=null;const dirs=[[1,0],[0,1]];cells.forEach(([x,y])=>dirs.forEach(([dx,dy])=>{if(set.has(key(x-dx,y-dy)))return;const run=[];let cx=x,cy=y;while(set.has(key(cx,cy))){run.push([cx,cy]);cx+=dx;cy+=dy;}if(run.length>best){best=run.length;bestRun=run;}}));cells.keep=best>=4?bestRun[Math.floor(bestRun.length/2)]:null;cells.keepKind=best>=5?'chest':best>=4?'modifier':null;cells.power=1+Math.max(cells.length-3,0);});
+  return groups;}
+function gridHTML(grid,groups,opts={}){const gi={},keeps=new Set();groups.forEach((g,i)=>{g.forEach(([x,y])=>gi[x+','+y]=i);if(g.keep)keeps.add(g.keep.join(','));});
+  return `<div class="grid" style="grid-template-columns:repeat(${grid[0].length},auto)">`+grid.map((r,y)=>[...r].map((c,x)=>{const k=x+','+y,cls=(c==='.'?'x':c);const gg=k in gi?` g${gi[k]%4} hit`:'';return `<div class="cell ${cls}${gg}${keeps.has(k)?' keep':''}" ${opts.play?`data-x="${x}" data-y="${y}"`:''}>${c==='C'?'C':(c==='.'?'':'')}</div>`}).join('')).join('')+`</div>`;}
+/* '.' = filler tile: a Forest/Mountain checkerboard, which can never form a line by itself */
+const fill=g=>g.map((r,y)=>[...r].map((c,x)=>c==='.'?((x+y)%2?'W':'M'):c).join(''));
+function caseCard(title,g0,note){const grid=fill(g0);const gs=analyze(grid);const info=gs.length?gs.map((g,i)=>`group ${i+1}: <b>${g.length} tiles</b>, power ${g.power}${g.keep?`, keeps ★ (${g.keepKind})`:''}`).join('<br>'):'<b>no match</b>';return `<div class="dg"><h5>${title}</h5>${gridHTML(grid,gs)}<p>${info}${note?'<br>'+note:''}</p></div>`;}
+
+/* ============ pages ============ */
+const PLAY={grid:fill(['.....','.FFF.','..F..','.....','.....'])};
+const PAGES={};
+const nextTile={F:'W',W:'M',M:'A',A:'C',C:'x',x:'F'};
+
+PAGES.home={group:'Basics',title:'Home',toc:[['what','What this wiki is'],['pages','Where to look'],['status','What is built'],['devdocs','Development docs'],['how','Keeping it accurate']],html:()=>`
+ <div class="pagehead"><h2>Goblin vs Unicorn</h2><p class="lede">A round-based strategy game: match tiles to earn resources and clear blight, then watch your units fight the blight's outposts in a 30-second battle.</p></div>
+ <section class="blk" id="what"><h3>What this wiki is</h3><p>The single place to look up how the game works — rules, numbers and open questions — so we're both looking at the same picture. Every rule here is either <span class="tag built">built</span> (in the game and tested), <span class="tag plan">planned</span>, an <span class="tag idea">idea</span> not yet committed to, or <span class="tag cut">cut</span>.</p>
+ <p>The written source of truth for <i>intent</i> is <code>Assets/GameDesignDoc.md</code>; this wiki shows how the game <i>actually behaves today</i>, with numbers exported straight from the game files.</p></section>
+ <section class="blk" id="pages"><h3>Where to look</h3><div class="cards">
+  <div><b>Round flow</b>The loop: Matching → Battle → Resolution.</div>
+  <div><b>Matching</b>What counts as a match, how groups form, match power. With a board you can play with.</div>
+  <div><b>Terrain</b>What each tile does to ground and flying units.</div>
+  <div><b>Units &amp; combat</b>Stats, reach, and what each unit's "brain" decides.</div>
+  <div><b>Structures</b>Castle, outposts, mines, chests.</div>
+  <div><b>Economy</b>Income, costs, payback time; and a page on growth curves.</div>
+  <div><b>Ideas &amp; open questions</b>Everything decided-not-built and undecided.</div></div></section>
+ <section class="blk" id="status"><h3>What is built today</h3><div class="tblwrap"><table><tr><th>Area</th><th>Status</th><th class="wrap">Notes</th></tr>
+  <tr><td>Matching phase</td><td><span class="tag built">built</span></td><td class="wrap">Group-based matches, match power, 4/5 keep tiles, cascades with "Chain xN" popups.</td></tr>
+  <tr><td>Battle phase</td><td><span class="tag built">built</span></td><td class="wrap">30s timer, A* pathfinding around water, brains with priorities. Balance is placeholder.</td></tr>
+  <tr><td>Resolution / upgrades</td><td><span class="tag built">built</span></td><td class="wrap">Pick a run upgrade after each round; only 5 exist and none cost anything.</td></tr>
+  <tr><td>Merchant</td><td><span class="tag plan">planned</span></td><td class="wrap">UI works; no merchant-only content yet.</td></tr>
+  <tr><td>Meta upgrade tree</td><td><span class="tag plan">planned</span></td><td class="wrap">Not started.</td></tr>
+  <tr><td>Save / resume</td><td><span class="tag built">built</span></td><td class="wrap">Mid-run save and "resume your run?" prompt.</td></tr>
+  <tr><td>Mulligan, deadlock detection</td><td><span class="tag cut">cut</span></td><td class="wrap">No stuck states exist: every adjacent swap is legal, even with no match.</td></tr></table></div></section>
+ <section class="blk" id="devdocs"><h3>Development docs</h3><p>This site and the repo behind it are the single public record of where the game is: how it works today, what it's meant to be, and what's being planned and decided. The documents open formatted on GitHub:</p>
+  <div class="tblwrap"><table><tr><th>Document</th><th class="wrap">What it is</th></tr>
+  <tr><td><a href="https://github.com/Michael-Josefik-Design/goblin-vs-unicorn-wiki/blob/main/game-snapshot.md" target="_blank" rel="noopener">Game snapshot</a></td><td class="wrap">Rules as built + current numbers, in plain text.</td></tr>
+  <tr><td><a href="https://github.com/Michael-Josefik-Design/goblin-vs-unicorn-wiki/blob/main/GameDesignDoc.md" target="_blank" rel="noopener">Game design doc</a></td><td class="wrap">Design intent — how the game should work.</td></tr>
+  <tr><td><a href="https://github.com/Michael-Josefik-Design/goblin-vs-unicorn-wiki/blob/main/ROADMAP.md" target="_blank" rel="noopener">Roadmap &amp; decisions log</a></td><td class="wrap">Status, build order, bugs, every decision and why.</td></tr>
+  <tr><td><a href="https://github.com/Michael-Josefik-Design/goblin-vs-unicorn-wiki/blob/main/plans/03-foundation-pass.md" target="_blank" rel="noopener">Plans</a> (<a href="https://github.com/Michael-Josefik-Design/goblin-vs-unicorn-wiki/tree/main/plans" target="_blank" rel="noopener">all</a>)</td><td class="wrap">Step-by-step plans for work in progress.</td></tr>
+  <tr><td><a href="https://github.com/Michael-Josefik-Design/goblin-vs-unicorn-wiki/tree/main/reviews" target="_blank" rel="noopener">Reviews</a></td><td class="wrap">Code and system reviews with findings.</td></tr>
+  <tr><td><a href="https://github.com/Michael-Josefik-Design/goblin-vs-unicorn-wiki/blob/main/vision/history-and-vision-notes.md" target="_blank" rel="noopener">Vision notes</a></td><td class="wrap">Digest of earlier design conversations — unverified prior reasoning, not decisions.</td></tr></table></div></section>
+ <section class="blk" id="how"><h3>Keeping it accurate</h3><p>Numbers come from <code>game-data.json</code>, produced by a script that reads the game's own files (last export: <b>${GAME.exported}</b>). Rules text is hand-written and lives in this page's source (<code>Docs/Wiki/wiki.template.html</code>) — update it when a rule changes.</p></section>`};
+
+PAGES.flow={group:'Basics',title:'Round flow',toc:[['loop','The loop'],['run','A run']],html:()=>`
+ <div class="pagehead"><h2>Round flow</h2><p class="lede">One round = one match phase, one battle, one resolution. A run is several rounds; a stash of Magic Dust carries between runs.</p></div>
+ <section class="blk" id="loop"><h3>The loop</h3><div class="flow">
+  <div><b>1. Matching</b>You have <b>${G.base_max_moves} moves</b>. Swap two adjacent tiles; every swap is legal, match or not. Matches earn resources and Dust and destroy blight.<small>Ends when moves run out, or "End Phase Early" (with a confirm).</small></div>
+  <div><b>2. Battle</b>The board becomes a battlefield for <b>${G.battle_duration_sec}s</b>. Blight left on the board became enemy outposts that spawn raiders. Your units act on their own — no click-to-move.<small>You spend resources on units and buildings.</small></div>
+  <div><b>3. Resolution</b>Report: what you earned, blight cleared, win or loss. Pick one run upgrade.<small>Then the next round starts with more blight pressure.</small></div></div></section>
+ <section class="blk" id="run"><h3>A run</h3>
+  <ul><li>Blight pressure starts at <b>${G.round_1_pressure}</b> and grows by <b>${G.pressure_step_per_round}</b> each round <span class="tag code">from code</span>; the world starts with ${G.starting_world_blight} blight.</li>
+  <li>The board is ${G.board_width}×${G.board_height} tiles, ${G.tile_size}px each, with the castle in the center.</li>
+  <li>Losing the castle ends the run; carry-out rules for Dust are planned, not built.</li></ul></section>`};
+
+PAGES.matching={group:'Rules',title:'Matching',toc:[['rule','The rule'],['gallery','Shapes & results'],['play','Try it'],['power','Match power'],['keep','4 and 5 matches'],['cascade','Cascades']],html:()=>`
+ <div class="pagehead"><h2>Matching</h2><p class="lede">Puzzle &amp; Dragons-style: swap any two neighbouring tiles; lines of three or more clear, and touching lines of the same biome clear together as one group.</p></div>
+ <section class="blk" id="rule"><h3>The rule</h3><ol class="steps">
+  <li>A tile <b>counts</b> only if it is in a straight line (horizontal or vertical) of <b>3 or more</b> of the same biome.</li>
+  <li>Counted tiles of the same biome that touch <b>up/down/left/right</b> merge into <b>one group</b> — plus, L, T, stacked, or offset-by-one lines all merge.</li>
+  <li>A single tile touching a line but not in its own line of 3 <b>does not</b> join.</li>
+  <li><b>Never diagonal.</b> Corner-touching lines stay two separate groups (both still clear).</li>
+  <li>The castle never matches; it breaks any line it sits in.</li></ol>
+  <p>${src('MatchingSystem.gd')} pinned by ${src('MatchingRulesTest')}</p></section>
+ <section class="blk" id="gallery"><h3>Shapes &amp; results</h3>
+  <div class="legend"><span><i class="cell F"></i>Field</span><span><i class="cell W"></i>Forest</span><span><i class="cell M"></i>Mountain</span><span><i class="cell A"></i>Water</span><span><i class="cell C"></i>Castle</span><span>Colored outline = one group · ★ = kept tile</span></div>
+  <div class="diagrams">
+   ${caseCard('Straight 3',['...','FFF','...'])}
+   ${caseCard('Straight 4',['....','FFFF','....'])}
+   ${caseCard('Straight 5 (6, 7… work too)',['.....','FFFFF','.....'])}
+   ${caseCard('Plus (lines share a tile)',['.F.','FFF','.F.'])}
+   ${caseCard('T / L (lines share a tile)',['F...','FFF.','F...'])}
+   ${caseCard('Stacked lines touch',['....','FFF.','FFF.','....'])}
+   ${caseCard('Offset by one',['.....','FFF..','.FFF.','.....'])}
+   ${caseCard('Lone tile does NOT join',['....','FFF.','F...'])}
+   ${caseCard('Diagonal = separate groups',['FFF...','...FFF'],'Corner contact only.')}
+   ${caseCard('Different biomes stay separate',['FFF.','AAA.','....'])}
+   ${caseCard('Castle breaks a line',['.....','FFCFF','.....'])}
+  </div></section>
+ <section class="blk" id="play"><h3>Try it</h3><p>Click a tile to change its type. Outlines and numbers follow the game's real rule.</p>
+  <div class="panel play" id="playgrid"></div><div id="playinfo" class="note"></div></section>
+ <section class="blk" id="power"><h3>Match power</h3><p>Power = <b>1 + (tiles beyond 3)</b>. It is a budget spent to <b>permanently kill blight</b> on tiles in the group (one point per blight). Blight left on tiles that are destroyed goes to a pending pool and reappears on new tiles that round.</p>
+  <div class="tblwrap"><table><tr><th>Group size</th>${[3,4,5,6,7,8,9].map(n=>`<th class="num">${n}</th>`).join('')}</tr><tr><td>Match power</td>${[3,4,5,6,7,8,9].map(n=>`<td class="num">${1+n-3}</td>`).join('')}</tr>
+  <tr><td>Dust earned</td>${[3,4,5,6,7,8,9].map(n=>`<td class="num">${n}</td>`).join('')}</tr></table></div>
+  <p style="font-size:.85rem;color:var(--muted)">Each destroyed tile also pays 1 of its resource; modifiers (deposits) add a chance at bonus yield.</p></section>
+ <section class="blk" id="keep"><h3>4 and 5 matches</h3><ul><li>The longest straight run in a group decides. A run of <b>4</b> keeps one tile (★) and may give it a modifier; a run of <b>5 or more</b> keeps one tile as a <b>chest</b>. There is <b>no cap</b> on run length — 6 and 7 in a row still match — but longer runs give no bigger reward than 5.</li><li>The kept tile is the middle one; in an even-length run it is the tile just past center (right/bottom). <span class="tag idea">open</span> Whether it should instead be the tile the player moved is undecided.</li><li>Kept tiles are not destroyed and are not paid for.</li><li>An L or plus made of 3-runs has no straight 4, so nothing is kept.</li></ul></section>
+ <section class="blk" id="cascade"><h3>Cascades</h3><p>After a clear, tiles fall and new ones drop in; if that makes new matches they resolve as another <b>wave</b>, repeating until stable. Each wave shows "Chain xN". <span class="tag plan">planned</span> Chain count does not multiply rewards yet.</p></section>`,
+ after(){const draw=()=>{const gs=analyze(PLAY.grid);$('#playgrid').innerHTML=gridHTML(PLAY.grid,gs,{play:true});$('#playinfo').innerHTML=gs.length?gs.map((g,i)=>`<b>Group ${i+1}</b>: ${g.length} tiles, match power ${g.power}${g.keep?`, keeps ★ (${g.keepKind})`:''}`).join(' &nbsp;·&nbsp; '):'No match on this board.';
+   $('#playgrid').querySelectorAll('.cell').forEach(c=>c.onclick=()=>{const x=+c.dataset.x,y=+c.dataset.y;const row=[...PLAY.grid[y]];row[x]=nextTile[row[x]]||'F';PLAY.grid[y]=row.join('');draw();});};draw();}};
+
+PAGES.terrain={group:'Rules',title:'Terrain',toc:[['table','Terrain table'],['flying','Flying units'],['future','Visual direction']],html:()=>{const sp=GAME.terrain_speed;return `
+ <div class="pagehead"><h2>Terrain</h2><p class="lede">During battle each gem becomes a terrain tile. The tile — never a decoration — decides how fast ground units move and whether they can cross.</p></div>
+ <section class="blk" id="table"><h3>Terrain table <span class="tag code">from code</span></h3><div class="tblwrap"><table><tr><th>Terrain</th><th>Gathered resource</th><th class="num">Ground speed</th><th>Ground units</th></tr>
+ ${TERRAIN_TYPES.map(t=>`<tr><td><b>${TERRAIN[t].name}</b></td><td>${chips([TERRAIN[t].res])}</td><td class="num">${sp[t]>0?'×'+sp[t]:'—'}</td><td>${sp[t]>0?(sp[t]<1?'passable, slowed':'passable, full speed'):'<b>blocked (solid wall)</b> — units path around'}</td></tr>`).join('')}</table></div>
+ <p>${src('MovementComponent.gd')} A unit's speed is set by the tile it is standing on. Water is a wall the A* pathfinder routes around; if a target is walled off, units get as close as they can (archers can still shoot across).</p></section>
+ <section class="blk" id="flying"><h3>Flying units</h3><p><span class="tag plan">planned</span> Flyers cross water and mountains and are never slowed by a tile. The movement code already has a <code>flying</code> flag that skips terrain and pathfinding; no flying unit exists yet.</p></section>
+ <section class="blk" id="future"><h3>Visual direction</h3><p><span class="tag idea">idea</span> A cosmetic layer of seeded decorations (trees, rocks, mushrooms) and neighbor-aware edges — battle view only, no gameplay effect. Ridge-blocking between adjacent mountains is <b>explore-later</b>. Details on Ideas &amp; open questions.</p></section>`}};
+
+PAGES.units={group:'Rules',title:'Units & combat',toc:[['stats','Stats'],['reach','Reach & spacing'],['brains','Brains'],['pathing','Movement'],['damage','Damage']],html:()=>{
+  const px=v=>fmt(v/TILE,2);
+  return `
+ <div class="pagehead"><h2>Units &amp; combat</h2><p class="lede">Units are built from small parts (health, combat, movement, gathering) plus a swappable <b>brain</b> that decides what to do. You never steer them directly — that's the "indirect control" idea.</p></div>
+ <section class="blk" id="stats"><h3>Stats <span class="tag code">from code</span></h3><div class="tblwrap"><table><tr><th>Unit</th><th class="num">HP</th><th class="num">Damage</th><th class="num">DPS</th><th class="num">Speed (tiles/s)</th><th class="num">Range (tiles)</th><th>Can</th><th>Cost</th></tr>
+ ${Object.entries(U).map(([n,u])=>{const caps=[];if(u.caps&1)caps.push('attack');if(u.caps&2)caps.push('gather');if(u.caps&4)caps.push('ranged');if(u.caps&8)caps.push('melee');const ranged=(u.caps&4)&&!(u.caps&8);return `<tr><td><b>${n}</b></td><td class="num">${u.max_hp}</td><td class="num">${u.attack_damage}</td><td class="num">${fmt(u.attack_damage/UD.attack_cooldown,1)}</td><td class="num">${px(u.move_speed)}</td><td class="num">${ranged?px(u.ranged_range):'melee'}</td><td>${caps.join(', ')}</td><td>${u.cost&&Object.keys(u.cost).length?costCell(u.cost,u.dust_cost):(n==='Raider'?'enemy':'—')}</td></tr>`}).join('')}</table></div>
+ <p style="font-size:.85rem;color:var(--muted)">Attack cooldown ${UD.attack_cooldown}s for all units (DPS = damage ÷ cooldown). 1 tile = ${TILE}px. Raiders are the enemy units outposts spawn. ${src('Unit Defs/*.tres')}</p></section>
+ <section class="blk" id="reach"><h3>Reach &amp; spacing</h3><p><b>One shared rule</b> decides "close enough to hit", used by both movement and combat so they can't disagree: <code>reach = attack range + my radius + target's radius</code> (centre to centre).</p>
+  <ul><li>Body radius ${UD.radius_px}px; units may touch but softly push apart (separation ${UD.separation_radius}px).</li><li>Aggro radius <b>${UD.aggro_radius}px (${px(UD.aggro_radius)} tiles)</b>: how far a unit notices enemies.</li><li>Melee range ${U.Knight.melee_range}px (contact); Archer range ${U.Archer.ranged_range}px (${px(U.Archer.ranged_range)} tiles).</li></ul></section>
+ <section class="blk" id="brains"><h3>Brains <span class="tag built">built</span></h3><p>A brain re-thinks about 2.5 times a second (not every frame) and <b>commits</b> to a choice so units don't dither.</p>
+  <h4>Player fighters — priority order</h4><ol class="steps"><li>Keep fighting the enemy unit I'm already on (unless it runs beyond 1.5× aggro).</li><li>Otherwise attack the nearest enemy unit inside aggro.</li><li>Otherwise keep hitting the outpost I'm on.</li><li>Otherwise go to the outpost closest to the castle.</li><li>Otherwise hold position.</li></ol>
+  <h4>Enemy raiders</h4><ol class="steps"><li>Finish the fight I'm in.</li><li>Otherwise the nearest player unit in aggro.</li><li>Otherwise march on the castle.</li></ol>
+  <h4>Gatherers</h4><p>Find the nearest suitable tile of their terrain (Farmer: Field, Miner: Mountain), walk to it, and collect ${U.Farmer.gather_amount} per ${U.Farmer.gather_interval}s.</p></section>
+ <section class="blk" id="pathing"><h3>Movement</h3><p>Ground units use <b>A* pathfinding</b> on the tile grid with water as solid cells; they walk straight when the line is clear and follow waypoints around lakes otherwise, re-planning about 3 times a second.</p></section>
+ <section class="blk" id="damage"><h3>Damage <span class="tag plan">placeholder</span></h3><p>Damage is currently flat: each hit removes attack-damage HP after any armor. Numbers are placeholder, chosen to confirm things damage and get damaged. The combat tuning pass will decide the real model (armor, damage types, crits, upgrades). See Ideas &amp; open questions.</p></section>`}};
+
+PAGES.structures={group:'Rules',title:'Structures',toc:[['castle','Castle'],['outpost','Outposts'],['mine','Mines & lumber mills'],['chest','Chests']],html:()=>`
+ <div class="pagehead"><h2>Structures</h2><p class="lede">A tile can carry one structure. Structures have a model (rules, HP) and a view (what you see).</p></div>
+ <section class="blk" id="castle"><h3>Castle <span class="tag built">built</span></h3><ul><li>The central tile. <b>${G.castle_hp} HP</b>; losing it loses the run.</li><li>Never part of a match today (it breaks any line).</li><li>Blight on the castle tile causes battle penalties — rules to be decided.</li><li><span class="tag idea">idea</span> Castle-in-a-match → next-battle buff. See Ideas.</li></ul></section>
+ <section class="blk" id="outpost"><h3>Enemy outposts <span class="tag built">built</span></h3><ul><li>Made from blight left on the board when matching ends. <b>${G.outpost_hp} HP</b>.</li><li>Spawn <b>${G.outpost_spawn_count} raider every ${G.outpost_spawn_interval}s</b> while alive. <span class="tag code">from code</span></li><li>Player fighters target the outpost closest to the castle first. Destroying an outpost clears its blight for good.</li><li><span class="tag plan">planned</span> Levels and biome-flavored enemies.</li></ul></section>
+ <section class="blk" id="mine"><h3>Mines &amp; lumber mills <span class="tag built">built</span></h3><ul><li>Built on tiles with a matching deposit. Cost <b>${costCell(GAME.buildings.Mine.base_cost)}</b>, plus ${costCell(GAME.buildings.Mine.cost_per_level)} per extra level. <span class="tag code">from code</span></li><li>Iron deposit: <b>${dep.yield_per_mine_tick} iron ore + 1 stone every ${dep.tick_interval}s</b> once built.</li><li>Deposit chance per gather: ${dep.base_gather_yield_chance*100}% (+1% per level). Mine deposits appear on new mountain tiles with ${G.mine_spawn_chance_base*100}% base chance.</li></ul></section>
+ <section class="blk" id="chest"><h3>Chests <span class="tag plan">partly built</span></h3><p>A straight match of 5 leaves a chest on the middle tile. It can't be matched. Battle behavior and loot are not settled.</p></section>`};
+
+/* ---------- economy ---------- */
+function income(){const tiles=G.base_max_moves*S.groupsPerMove*S.groupSize;const match={dust:tiles,food:tiles/4,wood:tiles/4,stone:tiles/4,water:tiles/4};
+  const per=U.Farmer.gather_amount/U.Farmer.gather_interval*(S.uptime/100)*G.battle_duration_sec;const battle={food:S.farmers*per,stone:S.miners*per};
+  const active=Math.max(G.battle_duration_sec-S.mineSeconds,0);const mi=S.mines*Math.floor(active/dep.tick_interval);battle.iron_ore=mi*dep.yield_per_mine_tick;battle.stone=(battle.stone||0)+mi;return{tiles,match,battle,per,mi};}
+const ECO_FACTS=()=>`<p>Fixed facts <span class="tag code">from code</span>: ${G.base_max_moves} moves per round; each destroyed tile pays 1 Dust + 1 of its resource; battle ${G.battle_duration_sec}s; a gatherer collects ${U.Farmer.gather_amount} per ${U.Farmer.gather_interval}s.</p>`;
+PAGES.income={group:'Economy',title:'Income',toc:[['ctl','Assumptions'],['round','One round'],['split','Where it comes from']],html:()=>{const I=income(),keys=['dust','food','wood','stone','water','iron_ore'];const rows=keys.map(k=>({label:RES[k].name,parts:[{k,v:(I.match[k]||0)},{k,v:(I.battle[k]||0)}]}));const tm=sum(I.match)-I.match.dust,tb=sum(I.battle);return `
+ <div class="pagehead"><h2>Income</h2><p class="lede">What one round pays from matching and from battle gatherers.</p></div>
+ <section class="blk" id="ctl"><h3>Assumptions</h3>${ECO_FACTS()}<p>Sliders are the unknowns <span class="tag guess">assumed</span>:</p><div class="panel" data-keep><div class="controls">
+  ${slider('groupsPerMove','Match groups per move',0,3,0.25,'A move can match nothing, or cascade.')}${slider('groupSize','Tiles per match group',3,9,0.5,'Bigger groups pay more.')}${slider('farmers','Farmers bought',0,8,1,'Field → Food.')}${slider('miners','Miners bought',0,8,1,'Mountain → Stone.')}${slider('uptime','Gatherer uptime',10,100,5,'Share of battle spent collecting.','%')}${slider('mines','Mines built',0,4,1,'On iron deposits.')}${slider('mineSeconds','Seconds until a mine runs',0,30,5,'Build time unmeasured.','s')}</div></div></section>
+ <section class="blk" id="round"><h3>One round</h3><div class="kpis"><div class="kpi"><b>${fmt(I.tiles,1)}</b><span>tiles matched</span></div><div class="kpi"><b>${fmt(I.match.dust,1)}</b><span>Dust from matching</span></div><div class="kpi"><b>${fmt(tm,1)}</b><span>items from matching</span></div><div class="kpi"><b>${fmt(tb,1)}</b><span>items from battle</span></div></div>
+ <div class="verdict ${tb>tm*2?'bad':(tb<tm/2?'warn':'good')}"><b>${tb>tm*2?'Battle income dwarfs matching.':(tb<tm/2?'Matching dominates.':'Roughly balanced.')}</b> Battle pays ${fmt(tb/Math.max(tm,0.1),1)}× what matching pays in items.</div></section>
+ <section class="blk" id="split"><h3>Where it comes from</h3>${stackedBars({rows})}<div class="tblwrap"><table><tr><th>Resource</th><th class="num">Matching</th><th class="num">Battle</th><th class="num">Total</th></tr>${keys.map(k=>`<tr><td>${chips([k])}</td><td class="num">${fmt(I.match[k]||0,1)}</td><td class="num">${fmt(I.battle[k]||0,1)}</td><td class="num">${fmt((I.match[k]||0)+(I.battle[k]||0),1)}</td></tr>`).join('')}</table></div><p style="font-size:.85rem;color:var(--muted)">Matching items split evenly across Food/Wood/Stone/Water (assumption). Bars show the total; the first shade-break marks matching.</p></section>`}};
+
+PAGES.costs={group:'Economy',title:'Costs',toc:[['units','Units'],['build','Buildings'],['chart','Compared'],['eff','Value for cost']],html:()=>{const keys=['food','wood','stone','water'];
+  const rows=PLAYER_UNITS.map(n=>({label:n,parts:[...keys.map(k=>({k,v:U[n].cost[k]||0})),{k:'dust',v:U[n].dust_cost}]}));Object.entries(GAME.buildings).forEach(([n,b])=>rows.push({label:n,parts:keys.map(k=>({k,v:b.base_cost[k]||0}))}));return `
+ <div class="pagehead"><h2>Costs</h2><p class="lede">Everything you can buy, side by side.</p></div>
+ <section class="blk" id="units"><h3>Units <span class="tag code">from code</span></h3><div class="tblwrap"><table><tr><th>Unit</th><th>Cost</th><th class="num">Items</th><th class="num">Dust</th></tr>${PLAYER_UNITS.map(n=>`<tr><td><b>${n}</b></td><td>${costCell(U[n].cost,U[n].dust_cost)}</td><td class="num">${sum(U[n].cost)}</td><td class="num">${U[n].dust_cost}</td></tr>`).join('')}</table></div></section>
+ <section class="blk" id="build"><h3>Buildings <span class="tag code">from code</span></h3><div class="tblwrap"><table><tr><th>Building</th><th>Level 1</th><th>Each extra level</th></tr>${Object.entries(GAME.buildings).map(([n,b])=>`<tr><td><b>${n}</b></td><td>${costCell(b.base_cost)}</td><td>${costCell(b.cost_per_level)}</td></tr>`).join('')}</table></div><p style="font-size:.85rem;color:var(--muted)">Assumes cost at level L = base + per-level × (L−1); confirm the formula in code before charting more levels.</p></section>
+ <section class="blk" id="chart"><h3>Compared</h3>${stackedBars({rows})}<div>${chips(['food','wood','stone','water','dust'])}</div></section>
+ <section class="blk" id="eff"><h3>Value for cost</h3><div class="tblwrap"><table><tr><th>Unit</th><th class="num">HP</th><th class="num">DPS</th><th class="num">HP / piece</th><th class="num">DPS / piece</th></tr>${PLAYER_UNITS.map(n=>{const u=U[n],p=sum(u.cost)+u.dust_cost,dps=u.attack_damage/UD.attack_cooldown;return `<tr><td><b>${n}</b></td><td class="num">${u.max_hp}</td><td class="num">${fmt(dps,1)}</td><td class="num">${fmt(u.max_hp/p,2)}</td><td class="num">${fmt(dps/p,2)}</td></tr>`}).join('')}</table></div><div class="verdict"><b>Fighters are cheap for what they do.</b> Knight/Archer: twice the HP and four times the damage for 7 pieces vs 4 for a gatherer. Placeholder combat numbers, so this is a flag not a verdict.</div></section>`}};
+
+PAGES.payback={group:'Economy',title:'Payback',toc:[['idea','The idea'],['gath','Gatherers'],['mine','Mines'],['dust','Dust budget']],html:()=>{const rate=U.Farmer.gather_amount/U.Farmer.gather_interval*(S.uptime/100);const I=income();const rowsG=['Farmer','Miner'].map(n=>{const items=sum(U[n].cost),secs=items/rate;return{n,items,secs,net:rate*G.battle_duration_sec-items}});
+  const mineCost=sum(GAME.buildings.Mine.base_cost),mineRate=(dep.yield_per_mine_tick+1)/dep.tick_interval,mineSecs=mineCost/mineRate;return `
+ <div class="pagehead"><h2>Payback</h2><p class="lede">Payback time = cost ÷ earnings per second. A purchase that repays in 5s of a 30s battle is a no-brainer; one that takes 25s is a decision.</p></div>
+ <section class="blk" id="idea"><div class="panel" data-keep><div class="controls">${slider('uptime','Gatherer uptime',10,100,5,'Share of time really collecting.','%')}${slider('mineSeconds','Mine start delay',0,30,5,'Unmeasured.','s')}</div></div></section>
+ <section class="blk" id="gath"><h3>Gatherers <span class="tag guess">assumed uptime</span></h3><div class="tblwrap"><table><tr><th>Unit</th><th class="num">Cost (items)</th><th class="num">Earns / s</th><th class="num">Pays back in</th><th class="num">Net in ${G.battle_duration_sec}s</th></tr>${rowsG.map(r=>`<tr><td><b>${r.n}</b></td><td class="num">${r.items}</td><td class="num">${fmt(rate,2)}</td><td class="num">${fmt(r.secs,1)}s</td><td class="num">${r.net>=0?'+':''}${fmt(r.net,1)}</td></tr>`).join('')}</table></div>
+  ${lineChart({series:[{name:'Farmer (net items)',color:'var(--food)',pts:Array.from({length:G.battle_duration_sec+1},(_,t)=>[t,rate*t-sum(U.Farmer.cost)])}],xl:'seconds into battle',yl:'net items',marks:[{x:rowsG[0].secs,label:'paid back',color:'var(--good)'}]})}
+  <div class="verdict ${rowsG[0].secs<8?'bad':'good'}"><b>${rowsG[0].secs<8?'Too easy to pay back.':'Reasonable.'}</b> At ${S.uptime}% uptime a Farmer repays in ${fmt(rowsG[0].secs,1)}s. Gatherers are free money until something limits them (cap, carry limit, travel, dust).</div></section>
+ <section class="blk" id="mine"><h3>Mines</h3><p>Cost ${mineCost} items; yields ${fmt(mineRate,2)} items/s (~${fmt(mineRate/rate,1)}× a gatherer); repays in ${fmt(mineSecs,1)}s once running.</p><div class="verdict ${mineSecs<10?'bad':'warn'}"><b>Strongest earner on paper</b> — needs an iron deposit. Worth capping per board or slowing its tick.</div></section>
+ <section class="blk" id="dust"><h3>Dust budget</h3><p>Dust has no battle income in code today, only matching (~${fmt(I.match.dust,1)} per round at the Income-page sliders).</p><div class="tblwrap"><table><tr><th>Unit</th><th class="num">Dust</th><th class="num">Rounds of matching for one</th></tr>${PLAYER_UNITS.map(n=>`<tr><td><b>${n}</b></td><td class="num">${U[n].dust_cost}</td><td class="num">${fmt(U[n].dust_cost/Math.max(I.match.dust,.01),2)}</td></tr>`).join('')}</table></div></section>`}};
+
+PAGES.growth={group:'Economy',title:'Growth curves',toc:[['four','The four shapes'],['play','Play with them'],['castle','Castle buff example'],['use','Which for what']],html:()=>{const N=Array.from({length:15},(_,i)=>i+1);
+  const lin=N.map(n=>[n,S.growthBase+S.linStep*(n-1)]),exp=N.map(n=>[n,S.growthBase*Math.pow(1+S.growthRate/100,n-1)]),log=N.map(n=>[n,S.growthBase+S.logScale*Math.log(n)]),pw=N.map(n=>[n,S.growthBase*Math.pow(n,1.5)]);
+  const cn=[3,4,5,6,7,8,9,10,11,12],cp=cn.map(n=>[n,S.castleBase*Math.pow(n/3,S.castleExp)]),cl=cn.map(n=>[n,S.castleBase*n/3]);const at=(pts,n)=>pts.find(p=>p[0]===n)[1];return `
+ <div class="pagehead"><h2>Growth curves</h2><p class="lede">Nearly every growing number — costs, income, XP, buffs — follows one of a few shapes. Picking the shape is the design decision; exact numbers are tuning inside it.</p></div>
+ <section class="blk" id="four"><h3>The four shapes</h3><div class="note"><b>Mental model — a staircase.</b> Linear: every stair the same height. Exponential: each stair a % taller than the last (gets steep fast). Diminishing (log): stairs get shorter and flatten. Power: in between.</div><div class="cards"><div><b>Linear</b>+5 each step. Predictable; falls behind a growing player.</div><div><b>Exponential</b>×1.15 each step. Great for <i>costs</i>; dangerous for <i>rewards</i>.</div><div><b>Diminishing</b>Big early gains that taper. Ideal for buffs that must never become mandatory.</div><div><b>Power (n^1.5)</b>Steeper than linear, gentler than exponential. Good for "bigger is disproportionately better".</div></div></section>
+ <section class="blk" id="play"><h3>Play with them</h3><div class="panel" data-keep><div class="controls">${slider('growthBase','Starting value',5,30,1,'Level 1.')}${slider('linStep','Linear: added per step',1,15,1,'')}${slider('growthRate','Exponential: % per step',5,40,1,'15% ≈ doubles every 5 steps.','%')}${slider('logScale','Diminishing: strength',2,40,1,'')}</div></div>
+  ${lineChart({series:[{name:'Linear',color:'var(--water)',pts:lin},{name:'Exponential',color:'var(--iron)',pts:exp},{name:'Diminishing',color:'var(--wood)',pts:log},{name:'Power n^1.5',color:'var(--dust)',pts:pw,dash:true}],xl:'level',yl:'value',xTicks:7})}
+  <div class="tblwrap"><table><tr><th>Shape</th><th class="num">L1</th><th class="num">L5</th><th class="num">L10</th><th class="num">L15</th><th class="num">15÷1</th></tr>${[['Linear',lin],['Exponential',exp],['Diminishing',log],['Power',pw]].map(([n,p])=>`<tr><td><b>${n}</b></td>${[1,5,10,15].map(l=>`<td class="num">${fmt(at(p,l),1)}</td>`).join('')}<td class="num">${fmt(at(p,15)/at(p,1),1)}×</td></tr>`).join('')}</table></div></section>
+ <section class="blk" id="castle"><h3>Worked example: castle-in-a-match buff <span class="tag idea">idea</span></h3><p>~2% at a group of 3 growing steeply for large blocks (~20% at 9): tiles ×3, buff ×10 — a <b>power curve with exponent ≈ 2.1</b>. The dashed line is "just proportional".</p>
+  <div class="panel" data-keep><div class="controls">${slider('castleBase','Buff at group of 3',1,5,0.5,'','%')}${slider('castleExp','Steepness (exponent)',1,3,0.1,'1 = straight line; 2.1 ≈ the idea.')}</div></div>
+  ${lineChart({series:[{name:'Power curve',color:'var(--dust)',pts:cp},{name:'Proportional',color:'var(--muted)',pts:cl,dash:true}],xl:"tiles in the castle's group",yl:'buff %',yfmt:v=>fmt(v,0)+'%',xTicks:9,marks:[{x:9,label:'block of 9'}]})}
+  <div class="kpis">${[3,5,9,12].map(n=>`<div class="kpi"><b>${fmt(at(cp,n),1)}%</b><span>group of ${n}</span></div>`).join('')}</div><div class="verdict"><b>Set a ceiling.</b> A power curve never stops climbing; cap it so a huge cascade can't give an absurd buff.</div></section>
+ <section class="blk" id="use"><h3>Which curve for what</h3><div class="tblwrap"><table><tr><th>Use</th><th>Shape</th><th class="wrap">Why</th></tr>
+  <tr><td>Cost of repeated purchases</td><td>Exponential, gentle (×1.1–1.3)</td><td class="wrap">Keeps pace with a growing economy.</td></tr>
+  <tr><td>Income from a leveled source</td><td>Linear / slightly diminishing</td><td class="wrap">So cost outgrows income and stops snowballing.</td></tr>
+  <tr><td>% buffs (damage, speed)</td><td>Diminishing, or capped</td><td class="wrap">Never mandatory or broken.</td></tr>
+  <tr><td>Hard-to-get rewards</td><td>Power curve, capped</td><td class="wrap">Rare and hard → allowed to be exciting.</td></tr>
+  <tr><td>Enemy pressure</td><td>Linear then gently exponential</td><td class="wrap">Fair early, forces growth late.</td></tr>
+  <tr><td>Chance drops</td><td>Flat % + small level bump</td><td class="wrap">Easy to understand (deposits: 50% + 1%/level).</td></tr></table></div></section>`}};
+
+PAGES.ideas={group:'Planned',title:'Ideas & open questions',toc:[['ideas','Ideas on the table'],['open','Open questions'],['unmeasured','Not measured yet']],html:()=>`
+ <div class="pagehead"><h2>Ideas &amp; open questions</h2><p class="lede">Decided-but-unbuilt, exploratory, and undecided — kept separate from the rules so nobody mistakes an idea for how the game works.</p></div>
+ <section class="blk" id="ideas"><h3>Ideas on the table</h3><div class="tblwrap"><table><tr><th>Idea</th><th>Status</th><th class="wrap">Notes</th></tr>
+  <tr><td><b>Castle in a match → buff</b></td><td><span class="tag idea">idea</span></td><td class="wrap">Castle joins a group without being destroyed; next-battle-only buff scaled by group size, steeper than linear (hard to make big groups). Buff by castle biome: rock → defense, forest → damage, field → gather speed / TBD. Needs a cap; playtest the curve.</td></tr>
+  <tr><td><b>Terrain decorations</b></td><td><span class="tag plan">planned</span></td><td class="wrap">Cosmetic, seeded per tile, battle view only, neighbor-aware edges. Gems keep a consistent base look; gems may gain state overlays (blight veins, sparkle).</td></tr>
+  <tr><td><b>Ridges between adjacent mountains</b></td><td><span class="tag idea">explore later</span></td><td class="wrap">Visual ridge; possibly blocks passage between the two tiles (a gameplay change needing edge-level pathfinding). Consider a slow "steep pass" before a hard wall.</td></tr>
+  <tr><td><b>Flying units</b></td><td><span class="tag plan">planned</span></td><td class="wrap">Ignore terrain speed and water/mountain blocking.</td></tr>
+  <tr><td><b>Merchant: Trade tab &amp; Shop buffs</b></td><td><span class="tag plan">planned</span></td><td class="wrap">Recommended first; items, lockbox and courier wait for the meta upgrade tree.</td></tr>
+  <tr><td><b>Chain-count rewards</b></td><td><span class="tag plan">planned</span></td><td class="wrap">Waves are counted and shown but give no bonus yet.</td></tr>
+  <tr><td><b>Mulligan / deadlock detection</b></td><td><span class="tag cut">cut</span></td><td class="wrap">Not needed — every adjacent swap is legal.</td></tr></table></div></section>
+ <section class="blk" id="open"><h3>Open questions</h3><ul><li>What does the castle biome give when it is a Field? (gather speed vs all-unit stats.)</li><li>How much should big cascades reward — and where's the cap?</li><li>Should something limit gatherers (a cap, carry limit) given they out-earn matching on paper?</li><li>The combat model: armor, damage types, upgrade stacking.</li><li>Blight on the castle tile: what exactly is the penalty?</li></ul></section>
+ <section class="blk" id="unmeasured"><h3>Not measured yet</h3><ul><li>Real match groups per move and their average size.</li><li>Real gatherer uptime in battle.</li><li>Mine build time; the building cost-per-level formula.</li><li>Whether Dust can be gathered in battle (design doc: yes; code: no).</li><li>How many outposts a typical board produces.</li></ul></section>`};
+
+/* ============ router ============ */
+const ORDER=['home','flow','matching','terrain','units','structures','income','costs','payback','growth','ideas'];
+function sync(a,b){ /* update live DOM in place so a dragged slider survives */
+  if(a.nodeType===1&&a.hasAttribute('data-keep'))return;
+  if(a.nodeType!==b.nodeType||a.nodeName!==b.nodeName){a.replaceWith(b.cloneNode(true));return;}
+  if(a.nodeType===3){if(a.data!==b.data)a.data=b.data;return;}
+  if(a.nodeType!==1)return;
+  for(const at of [...a.attributes])if(!b.hasAttribute(at.name))a.removeAttribute(at.name);
+  for(const at of [...b.attributes])if(a.getAttribute(at.name)!==at.value)a.setAttribute(at.name,at.value);
+  if(a.childNodes.length!==b.childNodes.length&&!a.querySelector('[data-keep]')){a.replaceChildren(...[...b.childNodes].map(x=>x.cloneNode(true)));return;}
+  const m=Math.min(a.childNodes.length,b.childNodes.length);for(let i=0;i<m;i++)sync(a.childNodes[i],b.childNodes[i]);}
+function render(){
+  const id=(location.hash||'#home').slice(1).split('/')[0];const key=PAGES[id]?id:'home';const P=PAGES[key];
+  let side='',last='';ORDER.forEach(k=>{const g=PAGES[k].group;if(g!==last){side+=`<div class="grp">${g}</div>`;last=g;}side+=`<button data-k="${k}" ${k===key?'aria-current="page"':''}>${PAGES[k].title}</button>`;});
+  $('#side').innerHTML=side;$('#side').querySelectorAll('button').forEach(b=>b.onclick=()=>{location.hash='#'+b.dataset.k;});
+  const body=P.html();const toc=`<div class="chiprow">${P.toc.map(([a,t])=>`<a href="#${key}/${a}" data-s="${a}">${t}</a>`).join('')}</div>`;
+  const heads=body.indexOf('</div>')+6;
+  $('#page').innerHTML=body.slice(0,heads)+toc+body.slice(heads);
+  $('#page').querySelectorAll('.chiprow a').forEach(a=>a.onclick=e=>{e.preventDefault();const el=document.getElementById(a.dataset.s);if(el)el.scrollIntoView({behavior:'smooth'});});
+  const draw=()=>{const fresh=document.createElement('div');const b2=P.html();const h2=b2.indexOf('</div>')+6;fresh.innerHTML=b2.slice(0,h2)+toc+b2.slice(h2);const live=$('#page');const m=Math.min(live.childNodes.length,fresh.childNodes.length);for(let i=0;i<m;i++)sync(live.childNodes[i],fresh.childNodes[i]);};
+  bindSliders(draw);if(P.after)P.after();
+}
+$('#exp').textContent='exported '+GAME.exported;
+window.addEventListener('hashchange',()=>{render();scrollTo(0,0)});
+render();
+</script>

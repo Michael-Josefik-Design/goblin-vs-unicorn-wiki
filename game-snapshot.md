@@ -1,6 +1,6 @@
 # Goblin vs Unicorn — game snapshot
 
-_Generated from the game files on **2026-09-25** (game repo revision `33bb30f`). Numbers are exported straight from the game; rules text is hand-maintained. For design *intent* see `GameDesignDoc.md`; for status/plan see `ROADMAP.md`._
+_Generated from the game files on **2026-09-25** (game repo revision `7a10c1a`). Numbers are exported straight from the game; rules text is hand-maintained. For design *intent* see `GameDesignDoc.md`; for status/plan see `ROADMAP.md`._
 
 Status tags used below: **built** (in the game and tested), **planned**, **idea** (not committed to), **cut**.
 
