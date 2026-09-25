@@ -14,9 +14,9 @@ Headless simulations replacing the Balance Ledger's guesses: (a) random play for
 **Acceptance:** numbers reproducible with a fixed seed; wiki economy pages show measured values.
 **Result (`_Debug/EconomySim.gd` → `Docs/Wiki/measured-economy.json`):** random play ≈ 4.8 items/round, skilled ≈ 31.6 (today's rule) → ≈ 1.9 / 13.6 under match-power; ~50% of groups come from cascades; 1 Farmer ≈ 29 items/battle (today); Mine builds in 2.0s, yields 1.2 iron + 0.6 stone per s, does not persist (board rebuilt each round); with 2 Knights the castle often falls before 30s. Re-run after Steps 2–4.
 
-### Step 2 — Match payout = match power
+### Step 2 — Match payout = match power — ✅ DONE 2026-09-25
 Resources per group = 1 + tiles beyond 3; dust unchanged (1/destroyed tile). Update `_compute_group_rewards`, tests (`MatchingRulesTest` rewards), wiki/snapshot. Rewards popup text stays correct.
-**Acceptance:** a 3/4/5 group pays 1/2/3 items and 3/4/5 dust; smoke test green.
+**Acceptance:** a 3/4/5 group pays 1/2/3 items (dust = destroyed tiles: 3/3/4 since the kept tile isn't destroyed); all suites green. **Done:** `_compute_group_rewards` pays `group_power` of the group's biome once; `MatchingRulesTest` pins 3/4/5/6.
 
 ### Step 3 — Gatherer haul loop + gather spots
 GatherBrain states: go to tile spot → gather (~3s timer) → carry 1 → go to castle → instant drop-off → repeat (an FSM). Tile keeps ~4 claimable spots; a full tile sends the gatherer to the next-nearest tile. Carry capacity and gather time are unit-def fields (upgradable later). Efficiency: no per-frame scans; reuse the brain think-timer and pathfinder.

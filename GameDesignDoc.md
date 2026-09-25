@@ -386,8 +386,8 @@ Mid/late game:
 ---
 
 ### 11.3 Economy core decisions & metal/refinery vision — 2026-09-25
-**Decided, not built yet (economy core):**
-- **Match payout follows the reference game (Beetle Battle-style):** resources per matched group = its **match power** (3 tiles → 1 item, 4 → 2, 5 → 3, i.e. 1 + tiles beyond 3). Starting small makes each extra tile a bigger relative deal. Today the game pays 1 item per destroyed tile (3× more), which is why matching out-earns nothing and gatherers looked huge on paper.
+**Economy core (payout built 2026-09-25; haul loop and raider targeting still to build):**
+- **Match payout follows the reference game (Beetle Battle-style) — BUILT 2026-09-25:** resources per matched group = its **match power** (3 tiles → 1 item, 4 → 2, 5 → 3, i.e. 1 + tiles beyond 3). Starting small makes each extra tile a bigger relative deal. Today the game pays 1 item per destroyed tile (3× more), which is why matching out-earns nothing and gatherers looked huge on paper.
 - **Dust stays generous:** 1 Dust per destroyed tile. Prices are *independent* of income — a unit may cost e.g. 1 water + 1 wood + ~10 dust; dust's value is set by prices, not 1:1 with items. Costs will be tuned from targets like "purchases per round", using measured income.
 - Reference-game fact check (developer replayed it): 3-match = 1 resource, 4-match = 2; gatherers walk to a tile, gather ~2–5s, carry it to the castle, instant drop-off, repeat; enemy units target gatherers before the castle; the reference had 5 tile types (so matches were rarer than our 4).
 - The haul loop and raider targeting: §10.6.

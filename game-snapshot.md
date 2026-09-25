@@ -1,6 +1,6 @@
 # Goblin vs Unicorn — game snapshot
 
-_Generated from the game files on **2026-09-25** (game repo revision `f43a95f`). Numbers are exported straight from the game; rules text is hand-maintained. For design *intent* see `GameDesignDoc.md`; for status/plan see `ROADMAP.md`._
+_Generated from the game files on **2026-09-25** (game repo revision `f0ab3a6`). Numbers are exported straight from the game; rules text is hand-maintained. For design *intent* see `GameDesignDoc.md`; for status/plan see `ROADMAP.md`._
 
 Status tags used below: **built** (in the game and tested), **planned**, **idea** (not committed to), **cut**.
 
@@ -24,7 +24,7 @@ Board 7x7, 192px tiles, castle in the center. Blight pressure starts at 5 and gr
 - **No diagonal** adjacency, ever. Lines touching only at a corner stay separate groups (both still clear).
 - The castle never matches; it breaks any line it sits in.
 - **Match power** = 1 + (tiles beyond 3). It is a budget that permanently kills blight (1 per point) on tiles in the group. Blight left on destroyed tiles goes to a pending pool and reappears on new tiles that round.
-- Each destroyed tile pays 1 Magic Dust + 1 of its biome's resource (Field=food, Forest=wood, Mountain=stone, Water=water); modifiers may add bonus yield.
+- **Payout (built 2026-09-25):** each group pays its **match power** in items of its biome's resource (Field=food, Forest=wood, Mountain=stone, Water=water): 3 tiles -> 1 item, 4 -> 2, 5 -> 3, 6 -> 4. Each *destroyed* tile also pays 1 Magic Dust (a kept 4/5-match tile is not destroyed, so a 4-match pays 3 dust, a 5-match 4). Modifiers may add bonus yield. Before this change the game paid 1 item per tile.
 - **Kept tiles:** the longest straight run in a group decides. A run of 4+ keeps one tile (may receive a modifier); a run of 5+ keeps a chest. The kept tile is `run[len/2]`, so in even-length runs it is the tile just past center (right/bottom). _Open design question: whether the kept tile should instead be the one the player moved._ Longer runs (6, 7) give no bigger reward than 5.
 - **Cascades:** after clearing, tiles fall and refill; new matches resolve as another wave, repeating until stable. Each wave shows "Chain xN". Chain count gives **no** reward multiplier yet (planned).
 
@@ -72,7 +72,7 @@ Costs:
 | Knight | 1 food, 1 water, 1 wood, 4 dust |
 | Archer | 1 food, 1 stone, 1 wood, 4 dust |
 
-Income facts: 3 moves/round; matching pays 1 dust + 1 resource per destroyed tile; a gatherer collects 1 per 1.0s during a 30s battle. Dust has **no battle income in code** (design doc says gathering should give some).
+Income facts: 3 moves/round; matching pays 1 dust per destroyed tile and each group pays its match power in items; a gatherer collects 1 per 1.0s during a 30s battle. Dust has **no battle income in code** (design doc says gathering should give some).
 On paper a Farmer (2 items + 2 dust) can earn ~30 items per battle at 100% uptime while a full round of matching pays roughly 10 items, so gatherers may out-earn matching; a Mine (10 items) yields ~2 items/s once running. These are **unmeasured assumptions** (gatherer uptime, match groups per move, mine build time) and the main balance question.
 
 **Measured 2026-09-25 (headless simulation of the real rules, `_Debug/EconomySim.gd`):**
@@ -82,9 +82,9 @@ On paper a Farmer (2 items + 2 dust) can earn ~30 items per battle at 100% uptim
 
 Run upgrades that exist: Sharpen Arrows (+1 damage for archers); Fast Gather (Gatherers are 10% faster); Sharpen Swords (+1 damage for knights); Terraformer (More moves when matching); Seething Evil (Increase the blight per round). None have a cost yet.
 
-## Decided but NOT built yet (economy core, decided 2026-09-25)
+## Decided but NOT built yet (economy core; step 1 measuring and step 2 match payout are done)
 Everything above describes TODAY's behavior. These three changes are decided and planned (`plans/04-economy-core.md`); the economy numbers above will change when they land.
-1. **Match payout = match power:** resources per matched group = 1 + tiles beyond 3 (3 tiles → 1 item, 4 → 2, 5 → 3), matching the reference game. Dust stays 1 per destroyed tile. (Today: 1 item per tile.)
+1. ~~Match payout = match power~~ — **built 2026-09-25** (see Matching rules above).
 2. **Gatherer haul loop:** walk to a tile, gather ~3s, carry 1 item, return to the castle, instant drop-off, repeat; ~4 gather spots per bare tile. (Today: gatherers stand and collect 1/s.) On paper this cuts a gatherer's take from ~30 to ~5-6 items per battle.
 3. **Raider targeting:** walking rule = committed target, else nearest visible gatherer, else the castle (a raider already hitting the castle stays on it). Swinging rule (things already in reach) = gatherer > fighter > structure, chosen per swing. Vision = aggro radius.
 Prices will be set from targets like "purchases per round", using measured income, not from today's guesses.
