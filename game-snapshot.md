@@ -1,6 +1,6 @@
 # Goblin vs Unicorn — game snapshot
 
-_Generated from the game files on **2026-09-25** (game repo revision `212704c`). Numbers are exported straight from the game; rules text is hand-maintained. For design *intent* see `GameDesignDoc.md`; for status/plan see `ROADMAP.md`._
+_Generated from the game files on **2026-09-25** (game repo revision `f43a95f`). Numbers are exported straight from the game; rules text is hand-maintained. For design *intent* see `GameDesignDoc.md`; for status/plan see `ROADMAP.md`._
 
 Status tags used below: **built** (in the game and tested), **planned**, **idea** (not committed to), **cut**.
 
@@ -74,6 +74,11 @@ Costs:
 
 Income facts: 3 moves/round; matching pays 1 dust + 1 resource per destroyed tile; a gatherer collects 1 per 1.0s during a 30s battle. Dust has **no battle income in code** (design doc says gathering should give some).
 On paper a Farmer (2 items + 2 dust) can earn ~30 items per battle at 100% uptime while a full round of matching pays roughly 10 items, so gatherers may out-earn matching; a Mine (10 items) yields ~2 items/s once running. These are **unmeasured assumptions** (gatherer uptime, match groups per move, mine build time) and the main balance question.
+
+**Measured 2026-09-25 (headless simulation of the real rules, `_Debug/EconomySim.gd`):**
+- Matching, per round of 3 moves on a freshly built board (the game rebuilds the board every round): a random player makes a match on 20.7% of moves and earns ~4.8 items + ~4.8 dust per round today; a skilled bot (best swap every move) earns ~31.59 items + ~31.59 dust. Under the decided match-power rule items drop to ~1.91 (random) / ~13.55 (skilled). About half of all groups come from cascades (only 4 tile types).
+- Gatherers today: 1 Farmer collects ~29.3 items per 30s battle (nearest field tile averages 2.78 tiles from the castle); 4 Farmers ~94.7 total. With raiders and only 2 Knights defending, the castle fell before 30s in some runs and most Farmers died.
+- Mine: builds in 1.98s, then ~1.2 iron ore/s + 0.6 stone/s. It does NOT persist: the board is rebuilt every round.
 
 Run upgrades that exist: Sharpen Arrows (+1 damage for archers); Fast Gather (Gatherers are 10% faster); Sharpen Swords (+1 damage for knights); Terraformer (More moves when matching); Seething Evil (Increase the blight per round). None have a cost yet.
 

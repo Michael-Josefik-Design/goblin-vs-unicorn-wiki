@@ -9,9 +9,10 @@ Diagnosis (B8): matching pays 1 item per tile (3× the reference) and gatherers 
 
 ## Steps (each independently shippable, tested, and committed separately)
 
-### Step 1 — Measure the current baseline (read-only, no game changes)
+### Step 1 — Measure the current baseline (read-only, no game changes) — ✅ DONE 2026-09-25
 Headless simulations replacing the Balance Ledger's guesses: (a) random play for a few hundred rounds → average match groups per move, group size, cascade frequency (4 tile types), dust and items earned; (b) 30s battles with 1/2/4 Farmers → real items collected; (c) mine build time and whether a mine survives a round. Output: a "measured" table in the wiki.
 **Acceptance:** numbers reproducible with a fixed seed; wiki economy pages show measured values.
+**Result (`_Debug/EconomySim.gd` → `Docs/Wiki/measured-economy.json`):** random play ≈ 4.8 items/round, skilled ≈ 31.6 (today's rule) → ≈ 1.9 / 13.6 under match-power; ~50% of groups come from cascades; 1 Farmer ≈ 29 items/battle (today); Mine builds in 2.0s, yields 1.2 iron + 0.6 stone per s, does not persist (board rebuilt each round); with 2 Knights the castle often falls before 30s. Re-run after Steps 2–4.
 
 ### Step 2 — Match payout = match power
 Resources per group = 1 + tiles beyond 3; dust unchanged (1/destroyed tile). Update `_compute_group_rewards`, tests (`MatchingRulesTest` rewards), wiki/snapshot. Rewards popup text stays correct.
