@@ -36,7 +36,7 @@
       "yield_per_mine_tick": 2
     }
   },
-  "exported": "2026-09-25",
+  "exported": "2026-09-26",
   "game": {
     "base_max_moves": 3,
     "battle_duration_sec": 30.0,
@@ -130,6 +130,7 @@
     "Archer": {
       "attack_damage": 4,
       "caps": 5,
+      "carry_capacity": 1,
       "cost": {
         "food": 1,
         "stone": 1,
@@ -139,9 +140,9 @@
       "dust_cost": 4,
       "file": "ArcherDef.tres",
       "gather_amount": 1,
-      "gather_interval": 1.0,
       "gather_range": 24.0,
       "gather_terrain_type": 0,
+      "gather_time": 3.0,
       "max_hp": 20,
       "melee_damage_mult": 1.0,
       "melee_range": 4.0,
@@ -155,6 +156,7 @@
     "Farmer": {
       "attack_damage": 1,
       "caps": 2,
+      "carry_capacity": 1,
       "cost": {
         "food": 1,
         "water": 1
@@ -163,9 +165,9 @@
       "dust_cost": 2,
       "file": "FarmerDef.tres",
       "gather_amount": 1,
-      "gather_interval": 1.0,
       "gather_range": 24.0,
       "gather_terrain_type": 0,
+      "gather_time": 3.0,
       "max_hp": 10,
       "melee_damage_mult": 1.0,
       "melee_range": 4.0,
@@ -179,6 +181,7 @@
     "Knight": {
       "attack_damage": 4,
       "caps": 9,
+      "carry_capacity": 1,
       "cost": {
         "food": 1,
         "water": 1,
@@ -188,9 +191,9 @@
       "dust_cost": 4,
       "file": "KnightDef.tres",
       "gather_amount": 1,
-      "gather_interval": 1.0,
       "gather_range": 24.0,
       "gather_terrain_type": 0,
+      "gather_time": 3.0,
       "max_hp": 20,
       "melee_damage_mult": 1.0,
       "melee_range": 4.0,
@@ -204,6 +207,7 @@
     "Miner": {
       "attack_damage": 1,
       "caps": 2,
+      "carry_capacity": 1,
       "cost": {
         "food": 1,
         "water": 1
@@ -212,9 +216,9 @@
       "dust_cost": 2,
       "file": "MinerDef.tres",
       "gather_amount": 1,
-      "gather_interval": 1.0,
       "gather_range": 24.0,
       "gather_terrain_type": 2,
+      "gather_time": 3.0,
       "max_hp": 10,
       "melee_damage_mult": 1.0,
       "melee_range": 4.0,
@@ -228,6 +232,7 @@
     "Raider": {
       "attack_damage": 3,
       "caps": 1,
+      "carry_capacity": 1,
       "cost": {
 
       },
@@ -235,9 +240,9 @@
       "dust_cost": 4,
       "file": "RaiderDef.tres",
       "gather_amount": 1,
-      "gather_interval": 1.0,
       "gather_range": 24.0,
       "gather_terrain_type": 0,
+      "gather_time": 3.0,
       "max_hp": 20,
       "melee_damage_mult": 1.0,
       "melee_range": 4.0,

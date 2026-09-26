@@ -340,8 +340,8 @@ Replaces the "v1" description in §10.2. Established after the first real playte
 
 ---
 
-### 10.6 Gatherer haul loop & raider targeting — DECIDED 2026-09-25, NOT BUILT YET
-**Gatherer haul loop** (replaces today's "stand on a tile and collect 1/s forever"):
+### 10.6 Gatherer haul loop & raider targeting — DECIDED 2026-09-25; haul loop BUILT 2026-09-26, raider targeting not yet
+**Gatherer haul loop — BUILT 2026-09-26** (replaced today's "stand on a tile and collect 1/s forever"):
 - A gatherer walks to a tile, spends **~3s gathering** (tunable, reference game was 2–5s), carries **1 item** (capacity 1 to start; carry capacity is a future upgrade), walks back to the **castle**, drops it off **instantly**, and repeats.
 - Effect: income depends on the distance between resource tiles and the castle, so the map the player builds in the matching phase shapes the economy. Rough on-paper yield: ~5–6 items per gatherer per 30s battle (vs ~30 today).
 - **Gather spots:** a bare tile has about **4 gather spots** (gatherers spread out around it; a full tile sends the gatherer to the next-nearest tile). Buildings on a tile change the spot count (a Mine starts with fewer and upgrades up to more). Numbers are arbitrary starting points.
@@ -386,7 +386,7 @@ Mid/late game:
 ---
 
 ### 11.3 Economy core decisions & metal/refinery vision — 2026-09-25
-**Economy core (payout built 2026-09-25; haul loop and raider targeting still to build):**
+**Economy core (payout built 2026-09-25; haul loop built 2026-09-26; raider targeting still to build):**
 - **Match payout follows the reference game (Beetle Battle-style) — BUILT 2026-09-25:** resources per matched group = its **match power** (3 tiles → 1 item, 4 → 2, 5 → 3, i.e. 1 + tiles beyond 3). Starting small makes each extra tile a bigger relative deal. Today the game pays 1 item per destroyed tile (3× more), which is why matching out-earns nothing and gatherers looked huge on paper.
 - **Dust stays generous:** 1 Dust per destroyed tile. Prices are *independent* of income — a unit may cost e.g. 1 water + 1 wood + ~10 dust; dust's value is set by prices, not 1:1 with items. Costs will be tuned from targets like "purchases per round", using measured income.
 - Reference-game fact check (developer replayed it): 3-match = 1 resource, 4-match = 2; gatherers walk to a tile, gather ~2–5s, carry it to the castle, instant drop-off, repeat; enemy units target gatherers before the castle; the reference had 5 tile types (so matches were rarer than our 4).

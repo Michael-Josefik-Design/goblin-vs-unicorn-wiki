@@ -18,9 +18,10 @@ Headless simulations replacing the Balance Ledger's guesses: (a) random play for
 Resources per group = 1 + tiles beyond 3; dust unchanged (1/destroyed tile). Update `_compute_group_rewards`, tests (`MatchingRulesTest` rewards), wiki/snapshot. Rewards popup text stays correct.
 **Acceptance:** a 3/4/5 group pays 1/2/3 items (dust = destroyed tiles: 3/3/4 since the kept tile isn't destroyed); all suites green. **Done:** `_compute_group_rewards` pays `group_power` of the group's biome once; `MatchingRulesTest` pins 3/4/5/6.
 
-### Step 3 — Gatherer haul loop + gather spots
+### Step 3 — Gatherer haul loop + gather spots — DONE 2026-09-26
 GatherBrain states: go to tile spot → gather (~3s timer) → carry 1 → go to castle → instant drop-off → repeat (an FSM). Tile keeps ~4 claimable spots; a full tile sends the gatherer to the next-nearest tile. Carry capacity and gather time are unit-def fields (upgradable later). Efficiency: no per-frame scans; reuse the brain think-timer and pathfinder.
 **Acceptance:** new `GatherLoopTest`: a Farmer on a tile N tiles away delivers at the expected rate; two gatherers on a 4-spot tile don't stack; existing tests green.
+**Result:** built (`GatherSpots`, `GatherBrain` state machine, `GatherComponent.collect/drop_off`, `UnitDef.gather_time`/`carry_capacity`); `GatherLoopTest` and all 12 suites pass. Re-measured: 1 Farmer ~6.3 items/battle (was 29.3), 4 Farmers ~23.4 (was 94.7); with raiders + 2 Knights 3.8 / 20.3, castle held 4–5 of 5.
 
 ### Step 4 — Raider walk / swing targeting
 Implement the two rules in `EnemyBrain`/combat (design doc §10.6): committed > nearest visible gatherer > castle for walking; gatherer > fighter > structure per swing when in reach. Raider vision as its own tunable (default = aggro radius). Extend `BrainTest`.
